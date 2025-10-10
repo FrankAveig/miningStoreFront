@@ -1,0 +1,48 @@
+@use "@/styles/_variables.scss" as *;
+
+.containerHome {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: calc(100vh - 200px);
+  box-sizing: border-box;
+}
+
+.logo{
+  width: 100px;
+  margin-bottom: 1.5rem;
+}
+.confidentialBox {
+
+  border-radius: 14px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+  padding: 2.5rem 2rem;
+  max-width: 600px;
+  width: 100%;
+  text-align: center;
+}
+
+.confidentialTitle {
+  color: $text-color;
+  font-size: $font-size-xl;  
+  font-weight: 700;
+  margin-bottom: 1.2rem;
+  letter-spacing: 0.5px;
+}
+
+.confidentialText {
+  color: $text-color;
+  font-size: $font-size-m;
+  font-weight: 500;
+  line-height: 1.7;
+}
+
+@media (max-width: 600px) {
+  .confidentialBox {
+    padding: $spacing-m $spacing-xs;
+    font-size: $font-size-s;
+  }
+  .confidentialTitle {
+    font-size: 1.1rem;
+  }
+} 

@@ -1,0 +1,60 @@
+@import "@/styles/_variables.scss";
+
+.textarea-container {
+  display: flex;
+  width: 100%;
+  border: 1px solid $gray-color;
+  border-radius: $border-radius;
+  background-color: $white-color;
+  transition: $transition;
+  height: fit-content;
+  &--sm {
+    min-height: 60px;
+  }
+  &--md {
+    min-height: 100px;
+  }
+  &--lg {
+    min-height: 160px;
+  }
+
+  &:focus-within {
+    border-color: $primary-color;
+    box-shadow: 0 0 0 3px rgba($primary-color, 0.1);
+  }
+
+  &--error {
+    border-color: $error-color;
+    box-shadow: 0 0 0 3px rgba($error-color, 0.08);
+  }
+
+  &--disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}
+
+textarea {
+  width: 100%;
+  resize: vertical;
+  border: none;
+  outline: none;
+  padding: $spacing-s;
+  font-family: $font-family;
+  font-size: $font-size-m;
+  line-height: 1.4;
+  background: transparent;
+  color: $text-color;
+
+  &:disabled {
+    cursor: not-allowed;
+    background: transparent;
+  }
+}
+
+.textarea-container--sm .textarea {
+  font-size: $font-size-s;
+}
+.textarea-container--lg .textarea {
+  font-size: $font-size-l;
+}

@@ -1,0 +1,126 @@
+@use "@/styles/_variables.scss" as *;
+
+.container {
+  background-color: $white-color;
+  padding: $spacing-m;
+  border-radius: $border-radius;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+  margin-top: $spacing-l;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: $spacing-m;
+
+  h3 {
+    margin: 0;
+    color: $text-color;
+    font-size: $font-size-l;
+  }
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-s;
+}
+
+.item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: $spacing-s $spacing-m;
+  border: 1px solid $gray-color;
+  border-radius: $border-radius;
+  transition: $transition;
+
+  &:hover {
+    background-color: lighten($gray-color, 10%);
+  }
+}
+
+.info {
+  display: flex;
+  align-items: center;
+  gap: $spacing-m;
+  flex: 1;
+}
+
+.symbol {
+  font-weight: 700;
+  color: $primary-color;
+  font-size: $font-size-m;
+  min-width: 60px;
+}
+
+.name {
+  font-weight: 500;
+  color: $text-color;
+  flex: 1;
+}
+
+.algorithm {
+  color: $text-color-secondary;
+  font-size: $font-size-s;
+  background-color: lighten($gray-color, 5%);
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+
+.removeBtn {
+  background: none;
+  border: none;
+  color: $error-color;
+  cursor: pointer;
+  padding: $spacing-xs;
+  transition: $transition;
+  display: flex;
+  align-items: center;
+
+  &:hover:not(:disabled) {
+    color: darken($error-color, 10%);
+    transform: scale(1.1);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+.empty {
+  text-align: center;
+  color: $text-color-secondary;
+  padding: $spacing-l;
+  font-style: italic;
+}
+
+.modalContent {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-s;
+}
+
+.label {
+  font-size: 14px;
+  font-weight: 600;
+  color: $text-color-secondary;
+}
+
+.select {
+  width: 100%;
+  padding: $spacing-s;
+  border: 1px solid $gray-color;
+  border-radius: $border-radius;
+  font-size: $font-size-m;
+  transition: $transition;
+
+  &:focus {
+    outline: none;
+    border-color: $primary-color;
+    box-shadow: 0 0 0 2px rgba($primary-color, 0.2);
+  }
+}
+

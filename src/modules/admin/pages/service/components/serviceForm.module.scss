@@ -1,0 +1,63 @@
+@use "@/styles/_variables.scss" as *;
+
+.formContainer {
+  width: 100%;
+  background-color: $white-color;
+  padding: $spacing-m;
+  border-radius: $border-radius;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+}
+
+.buttonContainer {
+  width: 200px;
+  margin-top: $spacing-m;
+}
+
+.formGroup {
+  box-sizing: border-box;
+  display: flex;
+  gap: 3rem;
+  margin-bottom: $spacing-m;
+  
+  @media (max-width: 768px) {
+    flex-direction: column;
+    gap: 0;
+  }
+}
+
+.imageSection {
+  width: 100%;
+}
+
+.imageLabel {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  color: $text-color-secondary;
+  margin-bottom: $spacing-s;
+}
+
+.required {
+  color: red;
+}
+
+.imagePreview {
+  margin-bottom: $spacing-m;
+  border-radius: $border-radius;
+  overflow: hidden;
+  max-width: 300px;
+}
+
+.previewImg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.errorText {
+  display: block;
+  color: red;
+  font-size: 12px;
+  margin-top: $spacing-xs;
+}
+

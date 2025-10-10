@@ -1,0 +1,76 @@
+@use "../../../../styles/_variables.scss" as *;
+
+.settingsContainer {
+  background-color: $white-color;
+  border-radius: $border-radius;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+  padding: $spacing-m;
+}
+
+.settingItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: $spacing-m;
+  border: 1px solid $gray-color;
+  border-radius: $border-radius;
+  margin-bottom: $spacing-m;
+  transition: $transition;
+
+  &:hover {
+    background-color: lighten($gray-color, 10%);
+  }
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: $spacing-m;
+  }
+}
+
+.settingInfo {
+  flex: 1;
+  padding-right: $spacing-m;
+
+  @media (max-width: 768px) {
+    padding-right: 0;
+  }
+}
+
+.settingTitle {
+  margin: 0 0 $spacing-xs 0;
+  color: $text-color;
+  font-size: $font-size-l;
+  font-weight: 600;
+}
+
+.settingDescription {
+  margin: 0;
+  color: $text-color-secondary;
+  font-size: $font-size-s;
+  line-height: 1.5;
+}
+
+.settingControl {
+  display: flex;
+  align-items: center;
+  gap: $spacing-m;
+
+  @media (max-width: 768px) {
+    width: 100%;
+    justify-content: space-between;
+  }
+}
+
+.settingStatus {
+  font-weight: 600;
+  font-size: $font-size-m;
+  color: $text-color;
+  min-width: 80px;
+  text-align: center;
+}
+

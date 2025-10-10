@@ -1,0 +1,97 @@
+@use "../../../../styles/_variables.scss" as *;
+
+.admin-sidebar {
+  background-color: $background-side-top-bar;
+  width: 280px;
+  height: 100vh;
+  position: fixed;
+  left: 0;
+  top: 0;
+  margin-top: 80px;
+  z-index: 900;
+  transition: transform 0.3s ease;
+
+  &__mobile-toggle {
+    display: none;
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: $primary-color;
+    border: none;
+    color: $white-color;
+    font-size: $font-size-l;
+    cursor: pointer;
+    z-index: 1001;
+    align-items: center;
+    justify-content: center;
+    transition: $transition;
+
+    &:hover {
+      background-color: $hover-color;
+    }
+  }
+
+  &__nav {
+    height: 85%;
+    overflow-y: auto;
+    padding: $spacing-m 0;
+  }
+
+  &__menu {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  &__menu-item {
+    margin: 0 0;
+  }
+
+  &__menu-link {
+    display: flex;
+    align-items: center;
+    gap: $spacing-m;
+    padding: $spacing-m $spacing-l;
+    color: $white-color;
+    text-decoration: none;
+    transition: $transition;
+    font-weight: 600;
+    font-size: $font-size-s;
+
+    &:hover {
+      background-color: $hover-color;
+    }
+
+    &--active {
+      background-color: $focus-color;
+      color: $white-color;
+      
+      .admin-sidebar__menu-icon {
+        color: $white-color;
+      }
+    }
+  }
+
+  &__menu-icon {
+    font-size: $font-size-l;
+    color: $white-color;
+    transition: $transition;
+  }
+
+
+  @media (max-width: 868px) {
+    transform: translateX(-100%);
+    width: 280px;
+
+    &--mobile-open {
+      transform: translateX(0);
+    }
+
+    &__mobile-toggle {
+      display: flex;
+    }
+  }
+} 

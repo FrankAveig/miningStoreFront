@@ -1,0 +1,197 @@
+@use "../../../../styles/_variables.scss" as *;
+
+.admin-header {
+  background-color: $background-side-top-bar;
+  padding: 0$spacing-m $spacing-l;
+  box-sizing: border-box;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  max-height: 80px;
+  &__container {
+      margin: 0 0;
+      display: flex;
+      justify-content: space-between;
+      height: 80px;
+    align-items: center;
+  }
+
+  &__logo {
+    display: flex;
+    align-items: center;
+    margin: 20px 0;
+    img {
+      width: 40px;
+    }
+  }
+
+  &__title {
+    font-size: $font-size-xl;  
+    color: $white-color;
+    margin: 0;
+    text-transform: uppercase;
+    white-space: nowrap;
+
+    &--highlight {
+      color: $white-color;
+    }
+  }
+
+  &__nav {
+    display: flex;
+    align-items: center;
+    gap: $spacing-l;
+  }
+
+  &__user {
+    position: relative;
+    color: $white-color;
+  }
+
+  &__user-trigger {
+    display: flex;
+    align-items: center;
+    gap: $spacing-s;
+    color: inherit;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font: inherit;
+    padding: $spacing-s $spacing-m;
+    border-radius: $border-radius;
+    transition: background $transition;
+    &:hover {
+      background: rgba(255,255,255,0.12);
+    }
+  }
+
+  &__caret {
+    transition: transform $transition;
+    font-size: 12px;
+    opacity: 0.8;
+    &--open {
+      transform: rotate(180deg);
+    }
+  }
+
+  &__user-icon {
+    font-size: $font-size-l;
+  }
+
+  &__user-name {
+    font-weight: 600;
+    font-size: $font-size-s;
+  }
+
+  &__logout-button {
+    display: flex;
+    align-items: center;
+    gap: $spacing-s;
+    padding: $spacing-s $spacing-m;
+    border: none;
+    border-radius: $border-radius;
+    background-color: $white-color;
+    color: $primary-color;
+    cursor: pointer;
+    transition: $transition;
+    font-weight: 600;
+    font-size: $font-size-s;
+
+    &:hover {
+      background-color: $primary-color;
+      color: $white-color;
+    }
+  }
+
+  &__logout-icon {
+    font-size: $font-size-m;
+  }
+
+  &__dropdown {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    min-width: 200px;
+    background: $white-color;
+    color: $text-color;
+    border-radius: $border-radius;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    border: 1px solid rgba(0,0,0,0.06);
+    padding: 6px;
+    z-index: 1001;
+  }
+
+  &__dropdown-item {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: $spacing-s;
+    padding: 10px 12px;
+    color: inherit;
+    text-decoration: none;
+    background: transparent;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    &:hover {
+      background: #f7f9ff;
+    }
+    svg { font-size: 16px; color: $primary-color; }
+  }
+
+  // Media queries para tablets
+  @media (max-width: 1024px) {
+    padding: $spacing-m;
+
+    &__title {
+      font-size: $font-size-l;
+    }
+
+    &__nav {
+      gap: $spacing-m;
+    }
+
+    &__user-name {
+      display: none;
+    }
+
+    &__logout-button {
+      padding: $spacing-s;
+      span {
+        display: none;
+      }
+    }
+    &__logo {
+      img {
+        width:80px;
+      }
+    }
+  }
+
+  // Media queries para móviles
+  @media (max-width: 768px) {
+    padding: $spacing-s;
+
+    &__title {
+      font-size: $font-size-m;
+    }
+
+    &__nav {
+      gap: $spacing-s;
+    }
+
+    &__user {
+      display: none;
+    }
+
+    &__logout-button {
+      padding: $spacing-xs;
+      border-radius: 50%;
+      width: 36px;
+      height: 36px;
+      justify-content: center;
+    }
+  }
+} 

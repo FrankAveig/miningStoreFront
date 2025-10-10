@@ -1,0 +1,119 @@
+@use "@/styles/_variables.scss" as *;
+
+.toast {
+  position: fixed;
+  top: 20px;
+  right: 10px;
+  min-width: 300px;
+  max-width: 400px;
+  background-color: $white-color;
+  border-radius: $border-radius;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  z-index: 1000;
+  animation: slideIn 0.3s ease-out;
+
+  &__content {
+    display: flex;
+    align-items: center;
+    padding: $spacing-m;
+    gap: $spacing-s;
+  }
+
+  &__icon {
+    font-size: 20px;
+    flex-shrink: 0;
+  }
+
+  &__text {
+    flex-grow: 1;
+    margin-right: $spacing-s;
+  }
+
+  &__title {
+    margin: 0 0 $spacing-xs;
+    font-size: 16px;
+    font-weight: 600;
+  }
+
+  &__message {
+    margin: 0;
+    font-size: 14px;
+    color: $text-color;
+  }
+
+  &__close {
+    background: none;
+    border: none;
+    padding: $spacing-xs;
+    cursor: pointer;
+    color: $gray-color;
+    transition: $transition;
+    flex-shrink: 0;
+
+    &:hover {
+      color: $text-color;
+    }
+  }
+
+  // Types
+  &--success {
+    
+    .toast__icon {
+      color: $success-color;
+    }
+  }
+
+  &--error {
+    border-left: 4px solid $error-color;
+    
+    .toast__icon {
+      color: $error-color;
+    }
+  }
+
+  &--info {
+    border-left: 4px solid $info-color;
+    
+    .toast__icon {
+      color: $info-color;
+    }
+  }
+
+  &--warning {
+    border-left: 4px solid $warning-color;
+    
+    .toast__icon {
+      color: $warning-color;
+    }
+  }
+
+  @media (max-width: 768px) {
+    top: 10px;
+    right: 10px;
+    left: 10px;
+    min-width: auto;
+    max-width: none;
+  }
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideOut {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+} 

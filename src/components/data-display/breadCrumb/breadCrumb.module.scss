@@ -1,0 +1,62 @@
+@import "@/styles/_variables.scss";
+
+.breadcrumb {
+  width: 100%;
+  font-family: $font-family;
+  font-size: $font-size-s;
+  margin-bottom: $spacing-m;
+  color: $gray-color;
+}
+
+.breadcrumb__list {
+  display: flex;
+  flex-wrap: wrap;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.breadcrumb__item {
+  display: flex;
+  align-items: center;
+}
+
+.breadcrumb__link {
+  display: flex;
+  color: $text-color;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s;
+  &:hover {
+    color: $hover-color;
+  }
+  &:hover .breadcrumb__icon {
+    color: $hover-color;
+  }
+}
+
+.breadcrumb__separator {
+  margin: 0 $spacing-xs;
+  color: $gray-color;
+  font-size: $font-size-s;
+  display: flex;
+}
+
+.breadcrumb__current {
+  color: $disabled-color;
+  font-weight: 600;
+  cursor: default;
+}
+
+.breadcrumb__icon {
+  display: inline-flex;
+  align-items: center;
+  margin-right: $spacing-xs;
+  font-size: 1.1em;
+  color: $text-color;
+  transition: color 0.2s;
+}
+
+@media print {
+  .breadcrumb { display: none !important; }
+}

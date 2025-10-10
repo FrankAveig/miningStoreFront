@@ -1,0 +1,81 @@
+@import "@/styles/_variables.scss";
+
+.date-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  height: 40px;
+  border: 1px solid $gray-color;
+  border-radius: $border-radius;
+  background-color: $white-color;
+  padding: 0 $spacing-s 0 calc($spacing-s + 24px);
+  transition: $transition;
+
+  &--sm {
+    min-height: 36px;
+  }
+  &--md {
+    min-height: 40px;
+  }
+  &--lg {
+    min-height: 48px;
+  }
+
+  &:focus-within {
+    border-color: $primary-color;
+    box-shadow: 0 0 0 3px rgba($primary-color, 0.1);
+  }
+
+  &--error {
+    border-color: $error-color;
+    box-shadow: 0 0 0 3px rgba($error-color, 0.08);
+  }
+
+  &--disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}
+
+.date-icon {
+  position: absolute;
+  left: $spacing-s;
+  width: 18px;
+  height: 18px;
+  fill: $gray-color;
+  pointer-events: none;
+}
+
+.date {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: $text-color;
+  font-family: $font-family;
+  font-size: $font-size-m;
+  line-height: 1;
+  padding: 0;
+
+  &::-webkit-calendar-picker-indicator {
+    opacity: 1;
+    cursor: pointer;
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    background: transparent;
+  }
+}
+
+.date-container--sm .date {
+  font-size: $font-size-s;
+}
+.date-container--lg .date {
+  font-size: $font-size-l;
+}

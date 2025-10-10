@@ -1,0 +1,87 @@
+@use "@/styles/_variables.scss" as *;
+
+.formContainer {
+  width: 100%;
+  background-color: $white-color;
+  padding: $spacing-m;
+  border-radius: $border-radius;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+
+  h3 {
+    margin-top: $spacing-l;
+    margin-bottom: $spacing-m;
+    color: $text-color;
+    font-size: $font-size-l;
+    border-bottom: 2px solid $primary-color;
+    padding-bottom: $spacing-xs;
+
+    &:first-child {
+      margin-top: 0;
+    }
+  }
+}
+
+.buttonContainer {
+  width: 200px;
+  margin-top: $spacing-l;
+}
+
+.formRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: $spacing-m;
+  margin-bottom: $spacing-m;
+  
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+}
+
+.imagesGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: $spacing-m;
+  margin-bottom: $spacing-m;
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.imageSection {
+  width: 100%;
+}
+
+.imageLabel {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  color: $text-color-secondary;
+  margin-bottom: $spacing-s;
+}
+
+.required {
+  color: red;
+}
+
+.imagePreview {
+  margin-bottom: $spacing-s;
+  border-radius: $border-radius;
+  overflow: hidden;
+  max-width: 100%;
+}
+
+.previewImg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.errorText {
+  display: block;
+  color: red;
+  font-size: 12px;
+  margin-top: $spacing-xs;
+}
+

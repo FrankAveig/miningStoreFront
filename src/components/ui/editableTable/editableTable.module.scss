@@ -1,0 +1,123 @@
+@import "@/styles/_variables.scss";
+
+.wrapper {
+  position: relative;
+}
+
+.header {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin: 0 $spacing-xs;
+  margin-bottom: $spacing-xs;
+}
+
+.titleSpace {
+  flex: 1;
+}
+
+.addBtn {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: none;
+  background: $success-color;
+  color: $white-color;
+  font-weight: 700;
+  cursor: pointer;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  background: $white-color;
+  .row {
+    display: grid;
+    border-top: 1px solid $gray-color;
+    grid-template-columns: repeat(var(--cols, 1), minmax(0, 1fr)) $spacing-l;
+    &:last-child {
+      border-right: none;
+    }
+  }
+  &:focus{
+    background-color: aqua;
+  }
+}
+
+.rowHeader {
+  border-radius: 12px 12px 0 0;
+  background: $primary-color;
+  font-weight: 600;
+  color: $white-color;
+  padding: 0 10px;
+  height: 4rem;
+  align-content: center;
+}
+
+.cell {
+  padding: 6px 10px;
+  &:first-child {
+    border-left: none;
+  }
+}
+
+.input {
+  width: 100%;
+  border: 1px solid $gray-color;
+  outline: none;
+  background: transparent;
+  color: $text-color;
+  font-family: $font-family;
+  font-size: $font-size-m;
+height: 40px;
+  &:disabled {
+    background: transparent;
+    cursor: not-allowed;
+  }
+  &:focus {
+    outline: 1px solid $primary-color;
+  }
+}
+
+/* columna de acciones (última) */
+.actionsHeader,
+.actionsCell {
+  width: auto; /* ocupa solo lo necesario */
+  min-width: 1px; /* no fuerza ancho */
+  text-align: center;
+  padding: 0; /* sin padding extra */
+}
+
+.actionsCell {
+  align-content: center;
+}
+
+.removeRowBtnInCell {
+  width: 22px; /* más pequeño */
+  height: 22px;
+  border-radius: 50%;
+  border: none;
+  background: $error-color; // rojo
+  color: $white-color;
+  font-weight: 700;
+  cursor: pointer;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}

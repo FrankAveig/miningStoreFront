@@ -1,0 +1,17 @@
+@use "../../../../styles/_variables.scss" as *;
+
+.filterBarContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: $spacing-m;
+} 
+
+@media (max-width: 768px) {
+  .filterBarContainer {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+}
+

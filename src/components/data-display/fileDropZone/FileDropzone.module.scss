@@ -1,0 +1,139 @@
+@import '@/styles/_variables.scss';
+
+.dropzone {
+  width: 100%;
+  box-sizing: border-box;
+  min-height: 60px;
+  border: 2px dashed $accent-color;
+  border-radius: $border-radius;
+  background: $white-color;
+  color: $text-color;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: border-color $transition, background $transition;
+  padding: $spacing-m;
+  position: relative;
+  text-align: center;
+  &:hover, &:focus {
+    border-color: $primary-color;
+    background: lighten($primary-color, 45%);
+  }
+  &--error {
+    border-color: $error-color;
+    background: lighten($error-color, 45%);
+  }
+  &--disabled {
+    background: $gray-color;
+    color: $disabled-color;
+    border-color: $gray-color;
+    cursor: not-allowed;
+    opacity: 0.7;
+  }
+}
+
+.dropzone__placeholder {
+  color: $gray-color;
+  font-size: $font-size-m;
+  display: flex;
+  align-items: center;
+  gap: $spacing-xs;
+}
+
+.dropzone__file {
+  display: flex;
+  align-items: center;
+  gap: $spacing-s;
+  font-size: $font-size-m;
+}
+
+.dropzone__filename {
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.dropzone__remove {
+  background: none;
+  border: none;
+  color: $error-color;
+  font-size: 1.2em;
+  cursor: pointer;
+  margin-left: $spacing-xs;
+  display: flex;
+  align-items: center;
+  transition: color $transition;
+  &:hover {
+    color: darken($error-color, 10%);
+  }
+}
+
+.iconPdf {
+  color: $error-color;
+  font-size: 1.5em;
+}
+
+.iconWord {
+  color: #2b579a;
+  font-size: 1.5em;
+}
+
+.iconImage {
+  color: $success-color;
+  font-size: 1.5em;
+}
+
+// Estilos para el cropper
+.cropperContainer {
+  width: 100%;
+  border: 1px solid $gray-color;
+  border-radius: $border-radius;
+  background: $white-color;
+  overflow: hidden;
+}
+
+.cropperHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: $spacing-m;
+  background: $background-color;
+  border-bottom: 1px solid $gray-color;
+
+  h4 {
+    margin: 0;
+    color: $text-color;
+    font-size: $font-size-l;
+  }
+}
+
+.cropperActions {
+  display: flex;
+  gap: $spacing-s;
+}
+
+.cropperButton {
+  padding: $spacing-xs $spacing-m;
+  border: none;
+  border-radius: $border-radius;
+  background: $primary-color;
+  color: $white-color;
+  cursor: pointer;
+  font-size: $font-size-s;
+  transition: background $transition;
+
+  &:hover {
+    background: darken($primary-color, 10%);
+  }
+
+  &.cropperButtonCancel {
+    background: $gray-color;
+    color: $text-color;
+
+    &:hover {
+      background: darken($gray-color, 10%);
+    }
+  }
+} 

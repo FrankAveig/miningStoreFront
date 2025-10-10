@@ -1,0 +1,123 @@
+@use "@/styles/variables" as *;
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+  z-index: 1000;
+  animation: fadeIn 0.18s ease-out;
+}
+
+.modal {
+  width: min(560px, 100%);
+  background: $white-color;
+  color: $black-color;
+  border-radius: 14px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.35);
+  overflow: hidden;
+  transform: translateY(6px);
+  animation: popIn 0.18s ease-out forwards;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.headerContent {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.title {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.description {
+  margin: 0;
+  opacity: 0.9;
+}
+
+.body {
+  padding: 1rem 1.25rem;
+  line-height: 1.55;
+}
+
+.footer {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: flex-end;
+  padding: 0.875rem 1.25rem 1.1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.iconButton {
+  all: unset;
+  cursor: pointer;
+  width: 32px;
+  height: 32px;
+  display: grid;
+  place-items: center;
+  border-radius: 8px;
+  font-size: 20px;
+  line-height: 1;
+  transition: background 0.12s ease-in-out, transform 0.06s;
+}
+.iconButton:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+.iconButton:active {
+  transform: scale(0.98);
+}
+
+.btn {
+  padding: 0.55rem 0.9rem;
+  border-radius: 10px;
+  font-weight: 600;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: #2a2f3e;
+  color: #fff;
+  cursor: pointer;
+  transition: transform 0.05s, background 0.15s, border-color 0.15s;
+}
+.btn:hover {
+  background: #343a4d;
+}
+.btn:active {
+  transform: translateY(1px);
+}
+
+.btnPrimary {
+  background: #4e8df5; // $secondary-color si lo tienes
+  border-color: rgba(78, 141, 245, 0.6);
+}
+.btnPrimary:hover {
+  background: #5b98fa;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes popIn {
+  from {
+    transform: translateY(6px) scale(0.985);
+  }
+  to {
+    transform: translateY(0) scale(1);
+  }
+}

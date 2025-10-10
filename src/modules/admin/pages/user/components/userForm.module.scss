@@ -1,0 +1,26 @@
+@use "@/styles/_variables.scss" as *;
+
+.formContainer {
+  width: 100%;
+  background-color: $white-color;
+  padding: $spacing-m;
+  border-radius: $border-radius;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+}
+
+.buttonContainer {
+  width: 200px;
+  margin-top: $spacing-m;
+}
+
+.formGroup {
+  box-sizing: border-box;
+  display: flex;
+  gap: 3rem;
+  margin-bottom: $spacing-m;
+  
+  @media (max-width: 768px) {
+    flex-direction: column;
+    gap: 0;
+  }
+} 

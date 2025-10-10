@@ -1,0 +1,422 @@
+@use "../../../styles/_variables.scss" as *;
+
+.paginated-table {
+  width: 100%;
+  border-radius: $border-radius;
+  margin-top: $spacing-l;
+  overflow: hidden;
+
+  &__table-container {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+    user-select: none;
+    touch-action: pan-x;
+    cursor: grab;
+    
+    &:active {
+      cursor: grabbing;
+    }
+
+    &::-webkit-scrollbar {
+      height: 6px;
+    }
+    &::-webkit-scrollbar-track {
+      background: $gray-color;
+      border-radius: 3px;
+    }
+    &::-webkit-scrollbar-thumb {
+      background: $primary-color;
+      border-radius: 3px;
+      &:hover {
+        background: darken($primary-color, 10%);
+      }
+    }
+  }
+
+  &__table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: $spacing-l;
+    min-width: 600px;
+  }
+
+  &__header {
+    background-color: $header-table-color;
+    color: $white-color;
+  }
+
+  &__header-row {
+    border-radius: $border-radius $border-radius 0 0;
+  }
+
+  &__header-cell {
+    padding: $spacing-m;
+    text-align: left;
+    font-weight: 600;
+    font-size: 16px;
+    text-transform:inherit;
+    @media (max-width: 1400px) {
+        font-size: 12px;
+        padding: $spacing-s;
+    }
+    &:first-child {
+      border-top-left-radius: $border-radius;
+    }
+
+    &:last-child {
+      border-top-right-radius: $border-radius;
+    }
+
+    &--actions {
+      width: 120px;
+      text-align: center;
+    }
+  }
+
+  &__body {
+    background-color: $white-color;
+  }
+
+  &__body-row {
+    border-bottom: 1px solid $gray-color;
+    transition: $transition;
+
+    &:hover {
+      background-color: rgba($primary-color, 0.05);
+    }
+
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+
+  &__body-cell {
+    padding: $spacing-m;
+    color: $text-color-secondary;
+    font-size: 14px;
+    @media (max-width: 1400px) {
+        font-size: 12px;
+        padding: $spacing-s;
+    }
+
+    &--actions {
+      width: 120px;
+      text-align: center;
+      padding: $spacing-s;
+    }
+  }
+
+  &__pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: $spacing-m;
+    margin-top: $spacing-l;
+    flex-wrap: wrap;
+  }
+
+  &__limit-selector {
+    display: flex;
+    align-items: center;
+    gap: $spacing-s;
+    margin-right: $spacing-m;
+  }
+
+  &__limit-label {
+    color: $text-color-secondary;
+    font-size: 14px;
+    font-weight: 600;
+  }
+
+  &__limit-select {
+    padding: $spacing-s;
+    border-radius: $border-radius;
+    border: 1px solid $gray-color;
+    background-color: $white-color;
+    color: $text-color-secondary;
+    font-size: 14px;
+    cursor: pointer;
+    transition: $transition;
+
+    &:hover {
+      border-color: $primary-color;
+    }
+
+    &:focus {
+      outline: none;
+      border-color: $primary-color;
+      box-shadow: 0 0 0 2px rgba($primary-color, 0.2);
+    }
+  }
+
+  &__limit-text {
+    color: $text-color-secondary;
+    font-size: 14px;
+  }
+
+  &__pagination-button {
+    padding: $spacing-s $spacing-m;
+    border-radius: $border-radius;
+    border: none;
+    background-color: $secondary-color;
+    color: $text-color-secondary;
+    cursor: pointer;
+    transition: $transition;
+    font-weight: 600;
+    font-size: 14px;
+
+    &:hover:not(:disabled) {
+      background-color: $primary-color;
+      color: $white-color;
+    }
+
+    &:disabled {
+      background-color: $gray-color;
+      cursor: not-allowed;
+      opacity: 0.7;
+    }
+  }
+
+  &__pagination-numbers {
+    display: flex;
+    gap: $spacing-s;
+    align-items: center;
+  }
+
+  &__pagination-number {
+    min-width: 35px;
+    height: 35px;
+    padding: 0 $spacing-s;
+    border-radius: $border-radius;
+    border: 1px solid $gray-color;
+    background-color: $white-color;
+    color: $text-color-secondary;
+    cursor: pointer;
+    transition: $transition;
+    font-weight: 600;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &:hover:not(:disabled) {
+      background-color: $secondary-color;
+      border-color: $secondary-color;
+      color: $text-color-secondary;
+    }
+
+    &:disabled {
+      cursor: default;
+      opacity: 0.5;
+    }
+
+    &--active {
+      background-color: $primary-color;
+      color: $white-color;
+      border-color: $primary-color;
+
+      &:hover {
+        background-color: $primary-color;
+      }
+    }
+  }
+
+  &__pagination-info {
+    color: $text-color-secondary;
+    font-size: 14px;
+    font-weight: 600;
+    margin-left: $spacing-m;
+  }
+
+  &__image-container {
+    width: 100px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    border-radius: 5px;
+  }
+
+  &__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+
+    &:hover {
+      transform: scale(1.1);
+    }
+  }
+
+  &__actions {
+    display: flex;
+    gap: $spacing-s;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &__action-button {
+    background: none;
+    border: none;
+    padding: $spacing-xs;
+    cursor: pointer;
+    border-radius: $border-radius;
+    transition: $transition;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: $primary-color;
+
+    &:hover {
+      background-color: rgba($primary-color, 0.1);
+      color: darken($primary-color, 10%);
+    }
+
+    &:focus {
+      outline: none;
+      box-shadow: 0 0 0 2px rgba($primary-color, 0.2);
+    }
+  }
+
+  &__action-icon {
+    font-size: 18px;
+  }
+
+  &__skeleton {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__skeleton-text {
+    width: 80%;
+    height: 16px;
+    background: linear-gradient(90deg, $gray-color 25%, lighten($gray-color, 10%) 50%, $gray-color 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+    border-radius: $border-radius;
+  }
+
+  &__skeleton-image {
+    width: 100%;
+    height: 60px;
+    background: linear-gradient(90deg, $gray-color 25%, lighten($gray-color, 10%) 50%, $gray-color 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+    border-radius: $border-radius;
+  }
+
+  &__skeleton-actions {
+    display: flex;
+    gap: $spacing-s;
+    justify-content: center;
+  }
+
+  &__skeleton-action {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: linear-gradient(90deg, $gray-color 25%, lighten($gray-color, 10%) 50%, $gray-color 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+  }
+
+  @keyframes shimmer {
+    0% {
+      background-position: 200% 0;
+    }
+    100% {
+      background-position: -200% 0;
+    }
+  }
+
+  @media (max-width: 868px) {
+    padding: $spacing-s;
+    
+    &__table-container {
+      margin: 0 -$spacing-s;
+      padding: 0 $spacing-s;
+      border-radius: $border-radius;
+    }
+
+    &__table {
+      margin-bottom: $spacing-m;
+    }
+
+    &__pagination {
+      flex-direction: column;
+      gap: $spacing-s;
+    }
+
+    &__pagination-numbers {
+      order: 1;
+      width: 100%;
+      justify-content: center;
+      margin: $spacing-s 0;
+    }
+
+    &__pagination-info {
+      order: 2;
+      text-align: center;
+      margin: $spacing-s 0;
+    }
+
+    &__pagination-button {
+      order: 3;
+      width: 100%;
+      margin: $spacing-xs 0;
+    }
+
+    &__limit-selector {
+      order: 4;
+      width: 100%;
+      justify-content: center;
+      margin-right: 0;
+    }
+
+    &__limit-select{
+        order: 6;
+    }
+    &__limit-label{
+        order: 5;
+    }
+
+    &__image-container {
+      height: 50px;
+    }
+
+    &__header-cell--actions,
+    &__body-cell--actions {
+      width: 100px;
+    }
+
+    &__action-icon {
+      font-size: 16px;
+    }
+  }
+
+  &__cell-content {
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-weight: 600;
+    font-size: 14px;
+    text-align: center;
+    min-width: 24px;
+    
+    &.movement-add {
+      color: rgb(32, 199, 32);
+      font-size: 22px;
+    }
+    
+    &.movement-remove {
+      color: rgb(255, 23, 23);
+      font-size: 22px;
+    }
+  }
+}

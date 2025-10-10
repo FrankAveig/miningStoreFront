@@ -1,0 +1,85 @@
+@import '@/styles/_variables.scss';
+
+.form-control {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-xs;
+  width: 100%;
+  box-sizing: border-box;
+  &--horizontal {
+    flex-direction: row;
+    align-items: center;
+    > .form-control__label {
+      margin-right: $spacing-m;
+      margin-bottom: 0;
+    }
+    > .form-control__control {
+      flex: 1;
+    }
+  }
+
+  &--vertical {
+    flex-direction: column;
+    > .form-control__label {
+      margin-bottom: $spacing-xs;
+    }
+  }
+
+  &--error {
+    .form-control__control {
+      // El input ya tiene borde rojo, aquí podrías agregar más si quieres
+    }
+    .form-control__error {
+      color: $error-color;
+      font-size: $font-size-s;
+      margin-top: $spacing-xs;
+    }
+  }
+}
+
+.form-control__label {
+  font-size: $font-size-m;
+  color: $text-color;
+  font-family: $font-family;
+  font-weight: 500;
+  display: inline-block;
+}
+
+.form-control__label--sr-only {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+
+.form-control__asterisk {
+  color: $error-color;
+  margin-left: 0.25em;
+}
+
+.form-control__control {
+  width: 100%;
+}
+
+.form-control__feedback {
+  min-height: 1.2em;
+}
+
+.form-control__error {
+  color: $error-color;
+  font-size: $font-size-s;
+}
+
+.form-control__hint {
+  color: $gray-color;
+  font-size: $font-size-xs;
+}
+
+.form-control__help {
+  color: $primary-color;
+  font-size: $font-size-xs;
+} 

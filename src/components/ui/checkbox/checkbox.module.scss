@@ -1,0 +1,113 @@
+@import "@/styles/_variables.scss";
+
+$box-size-sm: 16px;
+$box-size-md: 18px;
+$box-size-lg: 22px;
+
+.checkbox-container {
+  display: inline-flex;
+  align-items: center;
+  gap: $spacing-xs;
+  cursor: pointer;
+  user-select: none;
+  color: $text-color;
+
+  &--sm {
+    --box-size: #{$box-size-sm};
+    font-size: $font-size-s;
+  }
+  &--md {
+    --box-size: #{$box-size-md};
+    font-size: $font-size-m;
+  }
+  &--lg {
+    --box-size: #{$box-size-lg};
+    font-size: $font-size-l;
+  }
+
+  &--disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+
+  &--error .checkbox-box {
+    border-color: $error-color; // ✅ usar $error-color
+    box-shadow: 0 0 0 3px rgba($error-color, 0.08);
+  }
+}
+
+.checkbox-input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+
+  &:focus + .checkbox-box {
+    outline: none;
+    border-color: $primary-color;
+    box-shadow: 0 0 0 3px rgba($primary-color, 0.12);
+  }
+
+  &:checked + .checkbox-box {
+    background-color: $primary-color;
+    border-color: $primary-color;
+
+    &::after {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  /* Indeterminate (controlado vía JS) */
+  &:indeterminate + .checkbox-box {
+    background-color: $primary-color;
+    border-color: $primary-color;
+
+    &::after {
+      opacity: 1;
+      transform: scale(1);
+      /* barra en lugar de check */
+      clip-path: inset(40% 15% 40% 15%);
+    }
+  }
+
+  &:disabled + .checkbox-box {
+    background-color: lighten($primary-color, 45%);
+    border-color: $gray-color;
+  }
+}
+
+.checkbox-box {
+  width: var(--box-size);
+  height: var(--box-size);
+  border: 1px solid $gray-color;
+  border-radius: 4px;
+  background-color: $white-color;
+  display: inline-block;
+  position: relative;
+  transition: $transition;
+
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    margin: auto;
+    width: calc(var(--box-size) * 0.3);
+    height: calc(var(--box-size) * 0.6);
+    opacity: 0;
+    transform: scale(0.8);
+    transition: $transition;
+
+    /* “check” con bordes */
+    border-right: 2px solid $white-color;
+    border-bottom: 2px solid $white-color;
+    transform-origin: center;
+    rotate: 45deg;
+    top: calc(var(--box-size) * -0.08);
+    left: calc(var(--box-size) * 0.05);
+  }
+}
+
+.checkbox-label {
+  line-height: 1.2;
+}

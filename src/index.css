@@ -1,0 +1,69 @@
+:root {
+  font-family: "Roboto", sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  padding: 0;
+  margin: 0;
+  color: #202124;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.formContainer {
+  width: 100%;
+  background-color: #fff;
+  padding: 1.25rem;
+  border-radius: 12px;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  width: 100vw;
+  height: 100vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+input {
+  accent-color: #2b303f !important;
+}
+
+.p-checkbox,
+.p-checkbox-box {
+  border-color: #2b303f !important;
+  &[data-p-highlight="true"] {
+    background-color: #212533 !important;
+  }
+}
+
+.p-inputswitch.p-highlight .p-inputswitch-slider {
+  background-color: #212533 !important;
+}
+
+.p-dropdown:not(.p-disabled).p-focus {
+  border-color: #212533 !important;
+  box-shadow: 0 0 0 0.2rem rgba(43, 48, 63, 0.25) !important;
+}
+
+.sd-body__navigation .sd-btn {
+  height: 50px;
+}
+.wrapperTableIndex {
+background-color: #fff;
+border-radius: 12px;
+padding: 1.25rem;
+box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+}
+#root {
+  padding: 0!important;
+  margin: 0!important;
+  box-sizing: unset!important;
+}

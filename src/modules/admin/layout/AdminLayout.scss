@@ -1,0 +1,67 @@
+@use "../../../styles/_variables.scss" as *;
+
+.admin-layout {
+  display: grid;
+  grid-template-areas:
+    "header header"
+    "sidebar main";
+  grid-template-columns: 280px 1fr;
+  grid-template-rows: auto 1fr;
+  min-height: 100vh;
+  background-color: $background-color;
+  transition: grid-template-columns 0.3s ease;
+  box-sizing: unset!important;
+
+  &__content {
+    grid-area: main;
+    padding: $spacing-l;
+    background-color: #f6f8fc;
+    border-radius: $border-radius 0 0 0;
+    overflow-y: auto;
+    max-height: calc(100vh - 160px);
+    margin-top: 80px;
+    transition: margin-left 0.3s ease;
+    box-sizing: unset!important;
+  }
+
+  &__container {
+      border-radius: $border-radius;
+
+    max-width: calc(100% - 40px);
+    margin: 0 auto;
+    padding: $spacing-m $spacing-s;
+  }
+
+  // Cuando el sidebar está colapsado
+  .admin-sidebar--collapsed + &__content {
+    margin-left: 80px;
+  }
+
+  @media (max-width: 868px) {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "header"
+      "main";
+
+    &__content {
+      margin-left: 0;
+      margin-top: 80px;
+      min-height: calc(100vh - 80px);
+    }
+
+    &__container {
+      max-width: 100%;
+      padding: $spacing-s;
+    }
+
+  }
+}
+
+// Media queries para responsividad
+@media (max-width: 1024px) {
+  .admin-layout {
+    &__container {
+      padding: $spacing-m;
+    }
+  }
+} 

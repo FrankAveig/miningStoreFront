@@ -1,0 +1,117 @@
+@import "@/styles/_variables.scss";
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: $spacing-xs;
+  font-family: $font-family;
+  font-size: $font-size-m;
+  font-weight: 600;
+  border: none;
+  border-radius: $border-radius;
+  padding: $spacing-xs $spacing-m;
+  background-color: $primary-color;
+  color: $white-color;
+  cursor: pointer;
+  transition: $transition;
+  position: relative;
+  outline: none;
+  text-decoration: none;
+  min-width: 44px;
+  min-height: 40px;
+
+  &:focus-visible {
+    box-shadow: 0 0 0 3px rgba($primary-color, 0.2);
+  }
+
+  &:hover:not(.button--disabled):not(:disabled) {
+    background-color: $hover-color;
+  }
+}
+
+.button--primary {
+  background-color: $button-color;
+  color: $white-color;
+}
+
+.button--secondary {
+  background-color: $white-color;
+  color: $primary-color;
+  border: 1px solid $primary-color;
+  &:hover {
+    color: $white-color;
+  }
+}
+
+.button--danger {
+  background-color: $error-color;
+  color: $white-color;
+}
+
+.button--green {
+  background-color: $button-green-color;
+  color: $white-color;
+}
+
+.button--sm {
+  font-size: $font-size-s;
+  padding: $spacing-xs $spacing-s;
+  min-height: 32px;
+}
+
+.button--md {
+  font-size: $font-size-m;
+  padding: $spacing-xs $spacing-m;
+  min-height: 40px;
+}
+
+.button--lg {
+  font-size: $font-size-l;
+  padding: $spacing-s $spacing-xl;
+  min-height: 48px;
+}
+
+.button--fullwidth {
+  width: 100%;
+  display: flex;
+}
+
+.button--disabled,
+.button:disabled {
+  background-color: $gray-color !important;
+  color: $white-color !important;
+  cursor: not-allowed !important;
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+.button--loading {
+  pointer-events: none;
+  opacity: 0.8;
+}
+
+.button__spinner {
+  width: 1em;
+  height: 1em;
+  border: 2px solid $white-color;
+  border-top: 2px solid $primary-color;
+  border-radius: 50%;
+  animation: button-spinner 0.7s linear infinite;
+  display: inline-block;
+}
+
+@keyframes button-spinner {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.button__content {
+  display: inline-flex;
+  align-items: center;
+  gap: $spacing-xs;
+}

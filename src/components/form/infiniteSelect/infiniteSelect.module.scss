@@ -1,0 +1,113 @@
+@import '@/styles/_variables.scss';
+
+.infiniteSelect {
+  position: relative;
+  width: 100%;
+  font-family: $font-family;
+}
+
+.infiniteSelect__control {
+  display: flex;
+  align-items: center;
+  min-height: 40px;
+  border: 1px solid $gray-color;
+  border-radius: $border-radius;
+  background: $white-color;
+  padding: 0 $spacing-s;
+  cursor: pointer;
+  transition: border-color $transition;
+  font-size: $font-size-m;
+  color: $text-color;
+  &:hover, &:focus {
+    border-color: $primary-color;
+  }
+  &[aria-disabled='true'] {
+    background: $gray-color;
+    color: $disabled-color;
+    cursor: not-allowed;
+  }
+}
+
+.infiniteSelect__value {
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.infiniteSelect__arrow {
+  margin-left: $spacing-xs;
+  border: solid $gray-color;
+  border-width: 0 2px 2px 0;
+  display: inline-block;
+  padding: 3px;
+  transform: rotate(45deg);
+  transition: border-color $transition;
+}
+
+.infiniteSelect__dropdown {
+  position: absolute;
+  top: calc(100% + 2px);
+  left: 0;
+  width: 100%;
+  background: $white-color;
+  border: 1px solid $gray-color;
+  border-radius: $border-radius;
+  box-shadow: 0 2px 8px rgba($black-color, 0.08);
+  z-index: 10;
+  max-height: 260px;
+  overflow-y: auto;
+  margin-top: $spacing-xs;
+  padding: $spacing-xs 0;
+}
+
+.infiniteSelect__search {
+  width: 95%;
+  margin: 0 auto $spacing-xs auto;
+  display: block;
+  padding: $spacing-xs $spacing-s;
+  border: 1px solid $gray-color;
+  border-radius: $border-radius;
+  font-size: $font-size-m;
+  outline: none;
+  color: $text-color;
+  background: $white-color;
+  &:focus {
+    border-color: $primary-color;
+  }
+}
+
+.infiniteSelect__options {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  max-height: 180px;
+  overflow-y: auto;
+}
+
+.infiniteSelect__option {
+  padding: $spacing-xs $spacing-s;
+  cursor: pointer;
+  color: $text-color;
+  font-size: $font-size-m;
+  transition: background $transition, color $transition;
+  &:hover, &[aria-selected='true'] {
+    background: $primary-color;
+    color: $white-color;
+  }
+}
+
+.infiniteSelect__option--selected {
+  @extend .infiniteSelect__option;
+  background: $primary-color;
+  color: $white-color;
+  font-weight: 600;
+}
+
+.infiniteSelect__loading,
+.infiniteSelect__noresults {
+  padding: $spacing-xs $spacing-s;
+  color: $gray-color;
+  font-size: $font-size-s;
+  text-align: center;
+} 

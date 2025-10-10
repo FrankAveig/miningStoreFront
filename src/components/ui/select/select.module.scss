@@ -1,0 +1,55 @@
+@import '@/styles/_variables.scss';
+
+.select {
+  width: 100%;
+  min-height: 40px;
+  padding: 0 $spacing-s;
+  border-radius: $border-radius;
+  border: 1px solid $gray-color;
+  background-color: $white-color;
+  color: $text-color;
+  font-family: $font-family;
+  font-size: $font-size-m;
+  transition: $transition;
+  outline: none;
+  appearance: none;
+  cursor: pointer;
+
+  &:focus {
+    border-color: $focus-color;
+    box-shadow: 0 0 0 2px rgba($primary-color, 0.1);
+  }
+
+  &:hover:not(.select--disabled):not(:disabled) {
+    border-color: $hover-color;
+  }
+}
+
+.select--error {
+  border-color: $error-color !important;
+  background-color: lighten($error-color, 45%);
+}
+
+.select--disabled,
+.select:disabled {
+  background-color: $gray-color;
+  color: $text-color-secondary;
+  cursor: not-allowed;
+  border-color: $gray-color;
+  opacity: 0.7;
+}
+
+.select--sm {
+  min-height: 32px;
+  font-size: $font-size-s;
+}
+
+.select--md {
+  min-height: 40px;
+  font-size: $font-size-m;
+}
+
+.select--lg {
+  min-height: 48px;
+  font-size: $font-size-l;
+} 

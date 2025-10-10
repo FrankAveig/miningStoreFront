@@ -1,0 +1,85 @@
+@import '@/styles/_variables.scss';
+
+.input-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    height: 40px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    padding: 0 10px;
+    box-sizing: border-box;
+
+}
+
+.input {
+    box-sizing: border-box;
+
+  width: 100%;
+  height: 40px;
+  padding: 0 $spacing-s;
+  border-radius: $border-radius;
+  border: 1px solid $gray-color;
+  background-color: $white-color;
+  color: $text-color;
+  font-family: $font-family;
+  font-size: $font-size-m;
+  transition: $transition;
+  outline: none;
+
+  &::placeholder {
+    color: $gray-color;
+    opacity: 1;
+  }
+
+  &:focus {
+    border-color: $focus-color;
+    box-shadow: 0 0 0 2px rgba($primary-color, 0.1);
+  }
+
+  &:hover {
+    border-color: $hover-color;
+  }
+}
+
+.input--error {
+  border-color: $error-color !important;
+  background-color: lighten($error-color, 45%);
+}
+
+.input--disabled {
+  background-color: $gray-color;
+  color: $black-color;
+  cursor: not-allowed;
+  border-color: $gray-color;
+  opacity: 0.7;
+}
+
+.input--sm {
+  height: 32px;
+  font-size: $font-size-s;
+}
+
+.input--md {
+  height: 40px;
+  font-size: $font-size-m;
+}
+
+.input--lg {
+  height: 48px;
+  font-size: $font-size-l;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input[type=number]::-webkit-outer-spin-button,
+input[type=number]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
