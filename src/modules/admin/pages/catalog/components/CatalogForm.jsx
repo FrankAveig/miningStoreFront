@@ -256,7 +256,7 @@ export const CatalogForm = ({ onSuccess, initialData }) => {
               value={form.images[index]}
               onChange={(file) => handleImageChange(file, index)}
               enableCropper={true}
-              aspectRatio={16 / 9}
+              aspectRatio={1 / 1}
             />
             {errors[`image_${index}`] && <span className={styles.errorText}>{errors[`image_${index}`]}</span>}
           </div>
