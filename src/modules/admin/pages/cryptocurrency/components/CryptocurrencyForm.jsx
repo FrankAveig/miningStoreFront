@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import styles from './cryptocurrencyForm.module.scss';
 import { InputField } from '@/components/form/inputField/InputField';
+import { FileDropzone } from '@/components/data-display/fileDropZone/FileDropzone';
 import { Button } from '@/components/ui/button/Button';
 import { createCryptocurrency, updateCryptocurrency } from '@/modules/admin/services/cryptocurrencies.service';
 import { useToast } from '@/context/ToastContext';
@@ -12,11 +13,13 @@ export const CryptocurrencyForm = ({ onSuccess, initialData }) => {
     symbol: '', 
     algorithm: '',
     market_cap_usd: '',
+    image: null,
     status: 'active'
   });
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
   const { showToast } = useToast();
+  const [previewImage, setPreviewImage] = useState(null);
 
   useEffect(() => {
     if (initialData) {
@@ -25,9 +28,11 @@ export const CryptocurrencyForm = ({ onSuccess, initialData }) => {
         symbol: initialData.symbol || '',
         algorithm: initialData.algorithm || '',
         market_cap_usd: initialData.market_cap_usd || '',
+        image: null,
         status: initialData.status || 'active',
         id: initialData.id || undefined
       });
+      setPreviewImage(initialData.image_url || null);
     }
   }, [initialData]);
 
@@ -37,11 +42,26 @@ export const CryptocurrencyForm = ({ onSuccess, initialData }) => {
     setErrors((prev) => ({ ...prev, [name]: '' }));
   };
 
+  const handleImageChange = (file) => {
+    setForm((prev) => ({ ...prev, image: file }));
+    setErrors((prev) => ({ ...prev, image: '' }));
+    
+    // Crear preview de la imagen
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setPreviewImage(reader.result);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
   const validate = () => {
     const newErrors = {};
     if (!form.name.trim()) newErrors.name = 'El nombre es requerido';
     if (!form.symbol.trim()) newErrors.symbol = 'El símbolo es requerido';
     if (!form.algorithm.trim()) newErrors.algorithm = 'El algoritmo es requerido';
+    if (!form.id && !form.image) newErrors.image = 'La imagen es requerida';
     
     return newErrors;
   };
@@ -64,11 +84,16 @@ export const CryptocurrencyForm = ({ onSuccess, initialData }) => {
         status: form.status
       };
 
+      if (form.image) {
+        submitData.image = form.image;
+      }
+
       if (form.id) {
         await updateCryptocurrency(form.id, submitData);
       } else {
         await createCryptocurrency(submitData);
-        setForm({ name: '', symbol: '', algorithm: '', market_cap_usd: '', status: 'active' });
+        setForm({ name: '', symbol: '', algorithm: '', market_cap_usd: '', image: null, status: 'active' });
+        setPreviewImage(null);
       }
       setErrors({});
       if (onSuccess) onSuccess();
@@ -129,7 +154,27 @@ export const CryptocurrencyForm = ({ onSuccess, initialData }) => {
           placeholder="Ej: SHA-256"
           size="md"
         />
- 
+      </div>
+      <div className={styles.formGroup}>
+        <div className={styles.imageSection}>
+          <label className={styles.imageLabel}>
+            Imagen de la criptomoneda {!form.id && <span className={styles.required}>*</span>}
+          </label>
+          {previewImage && (
+            <div className={styles.imagePreview}>
+              <img src={previewImage} alt="Preview" className={styles.previewImg} />
+            </div>
+          )}
+          <FileDropzone
+            label={form.id ? 'Cambiar imagen (opcional)' : 'Selecciona una imagen'}
+            accept=".png,.jpg,.jpeg,.webp"
+            value={form.image}
+            onChange={handleImageChange}
+            enableCropper={true}
+            aspectRatio={1}
+          />
+          {errors.image && <span className={styles.errorText}>{errors.image}</span>}
+        </div>
       </div>
       <div className={styles.buttonContainer}>
         <Button type="submit" variant="primary" size="md" isLoading={loading} fullWidth>
@@ -148,6 +193,7 @@ CryptocurrencyForm.propTypes = {
     symbol: PropTypes.string,
     algorithm: PropTypes.string,
     market_cap_usd: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    image_url: PropTypes.string,
     status: PropTypes.string
   })
 };

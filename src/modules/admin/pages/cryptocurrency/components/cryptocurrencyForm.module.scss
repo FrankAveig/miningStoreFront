@@ -25,3 +25,41 @@
   }
 }
 
+.imageSection {
+  width: 100%;
+}
+
+.imageLabel {
+  font-size: $font-size-m;
+  font-weight: 600;
+  color: $text-color;
+  margin-bottom: $spacing-s;
+  display: block;
+}
+
+.required {
+  color: $error-color;
+  margin-left: 4px;
+}
+
+.imagePreview {
+  margin-bottom: $spacing-m;
+  border-radius: $border-radius;
+  overflow: hidden;
+  max-width: 300px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.previewImg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.errorText {
+  color: $error-color;
+  font-size: $font-size-s;
+  margin-top: $spacing-xs;
+  display: block;
+}
+
