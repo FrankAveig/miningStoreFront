@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
-import { FaHome, FaRegUser , FaExpandAlt , FaCompressAlt, FaBitcoin, FaServer, FaFolderOpen, FaShoppingCart, FaBolt, FaCog } from 'react-icons/fa';
+import { FaHome, FaRegUser , FaExpandAlt , FaCompressAlt, FaBitcoin, FaServer, FaFolderOpen, FaShoppingCart, FaBolt, FaCog, FaQuestionCircle } from 'react-icons/fa';
 
 import { useAuth } from '../../../../context/AuthContext';
 
@@ -72,6 +72,13 @@ export const Sidebar = () => {
       path: '/admin/precios-electricidad', 
       icon: FaBolt, 
       label: 'Precios Electricidad',
+      roles: ['ADMIN'] // Solo ADMIN
+    },
+
+    { 
+      path: '/admin/preguntas-frecuentes', 
+      icon: FaQuestionCircle, 
+      label: 'Preguntas Frecuentes',
       roles: ['ADMIN'] // Solo ADMIN
     },
 

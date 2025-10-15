@@ -30,6 +30,10 @@ import { EditElectricityPrice } from "@/modules/admin/pages/electricityPrice/Edi
 
 import { Settings } from "@/modules/admin/pages/settings/Settings";
 
+import { Faqs } from "@/modules/admin/pages/faq/Faqs";
+import { NewFaq } from "@/modules/admin/pages/faq/NewFaq";
+import { EditFaq } from "@/modules/admin/pages/faq/EditFaq";
+
 import PropTypes from "prop-types";
 import { Navigate, Route, Routes } from "react-router-dom";
 
@@ -113,6 +117,9 @@ export const AdminRoutes = () => {
         <Route path="/precios-electricidad" element={<ElectricityPrices />} />
         <Route path="/nuevo-precio-electricidad" element={<NewElectricityPrice />} />
         <Route path="/precios-electricidad/:id" element={<EditElectricityPrice />} />
+        <Route path="/preguntas-frecuentes" element={<Faqs />} />
+        <Route path="/nueva-pregunta-frecuente" element={<NewFaq />} />
+        <Route path="/preguntas-frecuentes/:id" element={<EditFaq />} />
         <Route path="/configuraciones" element={<Settings />} />
       </Route>
 

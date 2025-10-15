@@ -1,0 +1,94 @@
+@use "@/styles/_variables.scss" as *;
+
+.formContainer {
+  width: 100%;
+  background-color: $white-color;
+  padding: $spacing-m;
+  border-radius: $border-radius;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+}
+
+.buttonContainer {
+  width: 200px;
+  margin-top: $spacing-m;
+}
+
+.formGroup {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: $spacing-m;
+}
+
+.editorLabel {
+  font-size: $font-size-m;
+  font-weight: 600;
+  color: $text-color;
+  margin-bottom: $spacing-s;
+  display: block;
+}
+
+.required {
+  color: $error-color;
+  margin-left: 4px;
+}
+
+.editorWrapper {
+  background-color: $white-color;
+  border-radius: $border-radius;
+  
+  :global(.ql-container) {
+    min-height: 200px;
+    font-size: $font-size-m;
+    font-family: $font-family;
+  }
+
+  :global(.ql-toolbar) {
+    border-top-left-radius: $border-radius;
+    border-top-right-radius: $border-radius;
+    background-color: #f8f9fa;
+    border: 1px solid #e0e0e0;
+  }
+
+  :global(.ql-container) {
+    border-bottom-left-radius: $border-radius;
+    border-bottom-right-radius: $border-radius;
+    border: 1px solid #e0e0e0;
+    border-top: none;
+  }
+
+  :global(.ql-editor) {
+    min-height: 200px;
+  }
+
+  :global(.ql-editor.ql-blank::before) {
+    color: $text-muted-color;
+    font-style: normal;
+  }
+}
+
+.editorError {
+  :global(.ql-toolbar) {
+    border-color: $error-color;
+  }
+
+  :global(.ql-container) {
+    border-color: $error-color;
+  }
+}
+
+.errorText {
+  color: $error-color;
+  font-size: $font-size-s;
+  margin-top: $spacing-xs;
+  display: block;
+}
+
+.helpText {
+  color: $text-muted-color;
+  font-size: $font-size-s;
+  margin-top: $spacing-xs;
+  font-style: italic;
+  display: block;
+}
+
