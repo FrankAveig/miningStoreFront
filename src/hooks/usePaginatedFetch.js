@@ -6,7 +6,7 @@ import { useState, useEffect, useCallback, useRef } from 'react';
  * @param {Object} initialFilters - Filtros iniciales.
  * @param {number} initialLimit - Límite de items por página.
  */
-export function usePaginatedFetch(fetcher, initialFilters = {}, initialLimit = 10) {
+export function usePaginatedFetch(fetcher, initialFilters = {}, initialLimit = 50) {
   const [data, setData] = useState([]);
   const [pagination, setPagination] = useState({ current_page: 1, last_page: 1 });
   const [filters, setFilters] = useState(initialFilters);

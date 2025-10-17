@@ -93,7 +93,7 @@ export const CatalogForm = ({ onSuccess, initialData }) => {
         value: c.id, 
         label: c.name 
       })));
-    } catch (error) {
+    } catch {
       showToast('Error al cargar categorías', 'error', 'Error');
     }
   };
@@ -104,8 +104,8 @@ export const CatalogForm = ({ onSuccess, initialData }) => {
     setErrors((prev) => ({ ...prev, [name]: '' }));
   };
 
-  const handleCheckboxChange = (checked) => {
-    setForm((prev) => ({ ...prev, hosting_available: checked }));
+  const handleCheckboxChange = (e) => {
+    setForm((prev) => ({ ...prev, hosting_available: e.target.checked }));
   };
 
   const handleImageChange = (file, index) => {
@@ -132,7 +132,6 @@ export const CatalogForm = ({ onSuccess, initialData }) => {
     if (!form.category_id) newErrors.category_id = 'La categoría es requerida';
     if (!form.hashrate) newErrors.hashrate = 'El hashrate es requerido';
     if (!form.algorithm.trim()) newErrors.algorithm = 'El algoritmo es requerido';
-    if (!form.price_usd) newErrors.price_usd = 'El precio es requerido';
     if (!form.manufacturer.trim()) newErrors.manufacturer = 'El fabricante es requerido';
     if (!form.model.trim()) newErrors.model = 'El modelo es requerido';
     
@@ -234,7 +233,12 @@ export const CatalogForm = ({ onSuccess, initialData }) => {
       <div className={styles.formRow}>
         <InputField label="Precio (USD)" name="price_usd" type="number" step="0.01" value={form.price_usd} onChange={handleChange} isRequired error={errors.price_usd} size="md" />
         <div style={{ paddingTop: '28px' }}>
-          <CheckboxField label="Hosting disponible" checked={form.hosting_available} onChange={handleCheckboxChange} />
+          <CheckboxField 
+            id="hosting_available"
+            label="Hosting disponible" 
+            checked={form.hosting_available} 
+            onChange={handleCheckboxChange} 
+          />
         </div>
       </div>
 
