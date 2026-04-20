@@ -27,6 +27,7 @@ export const CatalogForm = ({ onSuccess, initialData }) => {
     algorithm: '',
     power_consumption_w: '',
     price_usd: '',
+    price_clp: '',
     manufacturer: '',
     model: '',
     hosting_available: false,
@@ -60,6 +61,7 @@ export const CatalogForm = ({ onSuccess, initialData }) => {
         algorithm: initialData.algorithm || '',
         power_consumption_w: initialData.power_consumption_w || '',
         price_usd: initialData.price_usd || '',
+        price_clp: initialData.price_clp || '',
         manufacturer: initialData.manufacturer || '',
         model: initialData.model || '',
         hosting_available: initialData.hosting_available || false,
@@ -161,6 +163,7 @@ export const CatalogForm = ({ onSuccess, initialData }) => {
         algorithm: form.algorithm.trim(),
         power_consumption_w: Number(form.power_consumption_w) || 0,
         price_usd: Number(form.price_usd),
+        price_clp: Number(form.price_clp) || 0,
         manufacturer: form.manufacturer.trim(),
         model: form.model.trim(),
         hosting_available: form.hosting_available,
@@ -232,7 +235,10 @@ export const CatalogForm = ({ onSuccess, initialData }) => {
       <h3>Precio y Disponibilidad</h3>
       <div className={styles.formRow}>
         <InputField label="Precio (USD)" name="price_usd" type="number" step="0.01" value={form.price_usd} onChange={handleChange} isRequired error={errors.price_usd} size="md" />
-        <div style={{ paddingTop: '28px' }}>
+        <InputField label="Precio (CLP)" name="price_clp" type="number" step="1" value={form.price_clp} onChange={handleChange} size="md" />
+      </div>
+      <div className={styles.formRow}>
+        <div style={{ paddingTop: '8px' }}>
           <CheckboxField 
             id="hosting_available"
             label="Hosting disponible" 

@@ -7,6 +7,7 @@ export const catalogAdapterGet = (data) => {
     hashrate: item.hashrate,
     hashrate_unit: item.hashrate_unit,
     price_usd: item.price_usd,
+    price_clp: item.price_clp,
     algorithm: item.algorithm,
     hosting_available: item.hosting_available === 1,
     power_consumption_w: item.power_consumption_w,

@@ -34,6 +34,9 @@ import { Faqs } from "@/modules/admin/pages/faq/Faqs";
 import { NewFaq } from "@/modules/admin/pages/faq/NewFaq";
 import { EditFaq } from "@/modules/admin/pages/faq/EditFaq";
 
+import { Orders } from "@/modules/admin/pages/order/Orders";
+import { OrderDetail } from "@/modules/admin/pages/order/OrderDetail";
+
 import PropTypes from "prop-types";
 import { Navigate, Route, Routes } from "react-router-dom";
 
@@ -120,6 +123,8 @@ export const AdminRoutes = () => {
         <Route path="/preguntas-frecuentes" element={<Faqs />} />
         <Route path="/nueva-pregunta-frecuente" element={<NewFaq />} />
         <Route path="/preguntas-frecuentes/:id" element={<EditFaq />} />
+        <Route path="/pedidos" element={<Orders />} />
+        <Route path="/pedidos/:id" element={<OrderDetail />} />
         <Route path="/configuraciones" element={<Settings />} />
       </Route>
 

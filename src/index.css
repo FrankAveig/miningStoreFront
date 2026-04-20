@@ -57,10 +57,10 @@ input {
   height: 50px;
 }
 .wrapperTableIndex {
-background-color: #fff;
-border-radius: 12px;
-padding: 1.25rem;
-box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+  border-radius: 12px;
+  padding: 1.25rem;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
 }
 #root {
   padding: 0!important;

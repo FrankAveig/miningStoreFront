@@ -1,0 +1,135 @@
+@use "../../../../styles/_variables.scss" as *;
+
+.orderDetail {
+  max-width: 960px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: $spacing-m;
+  margin-bottom: $spacing-l;
+}
+
+@media (max-width: 640px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.card {
+  background: var(--bg-secondary, #1e1e2f);
+  border-radius: 12px;
+  padding: $spacing-l;
+}
+
+.cardTitle {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: $spacing-m;
+  color: var(--text-primary, #fff);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.field {
+  margin-bottom: $spacing-s;
+  font-size: 0.9rem;
+}
+
+.fieldLabel {
+  color: var(--text-secondary, #aaa);
+  display: block;
+  margin-bottom: 2px;
+}
+
+.fieldValue {
+  color: var(--text-primary, #fff);
+  font-weight: 500;
+}
+
+.statusForm {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-m;
+}
+
+.statusSelect {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid var(--border-color, #333);
+  background: var(--bg-primary, #151525);
+  color: var(--text-primary, #fff);
+  font-size: 0.95rem;
+}
+
+.adminNotesTextarea {
+  width: 100%;
+  min-height: 80px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid var(--border-color, #333);
+  background: var(--bg-primary, #151525);
+  color: var(--text-primary, #fff);
+  font-size: 0.95rem;
+  resize: vertical;
+}
+
+.statusActions {
+  display: flex;
+  gap: $spacing-s;
+}
+
+.itemsTable {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: $spacing-s;
+  color: #fff;
+}
+
+.itemsTable th,
+.itemsTable td {
+  padding: 10px 12px;
+  text-align: left;
+  border-bottom: 1px solid var(--border-color, #262636);
+  font-size: 0.88rem;
+  color: #fff;
+}
+
+.itemsTable th {
+  color: rgba(255, 255, 255, 0.85);
+  font-weight: 600;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.itemsTable tfoot td {
+  color: #fff;
+}
+
+.itemImg {
+  width: 42px;
+  height: 42px;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+.statusBadge {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.statusPending   { background: #ffc10733; color: #ffc107; }
+.statusContacted { background: #17a2b833; color: #17a2b8; }
+.statusConfirmed { background: #28a74533; color: #28a745; }
+.statusShipped   { background: #007bff33; color: #007bff; }
+.statusDelivered { background: #6f42c133; color: #6f42c1; }
+.statusCancelled { background: #dc354533; color: #dc3545; }

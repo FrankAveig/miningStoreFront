@@ -20,6 +20,7 @@ export const createCatalogItem = async (data) => {
     formData.append('algorithm', data.algorithm);
     formData.append('power_consumption_w', data.power_consumption_w);
     formData.append('price_usd', data.price_usd);
+    formData.append('price_clp', data.price_clp);
     formData.append('manufacturer', data.manufacturer);
     formData.append('model', data.model);
     formData.append('hosting_available', data.hosting_available ? 1 : 0);
@@ -59,6 +60,7 @@ export const updateCatalogItem = async (id, data) => {
     formData.append('algorithm', data.algorithm);
     formData.append('power_consumption_w', data.power_consumption_w);
     formData.append('price_usd', data.price_usd);
+    formData.append('price_clp', data.price_clp);
     formData.append('manufacturer', data.manufacturer);
     formData.append('model', data.model);
     formData.append('hosting_available', data.hosting_available ? 1 : 0);
