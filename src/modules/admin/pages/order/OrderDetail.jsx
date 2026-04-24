@@ -88,6 +88,22 @@ export const OrderDetail = () => {
 
     const formatDate = (d) => d ? new Date(d).toLocaleString('es-CL') : '—';
 
+    const isClpOrder = order.currency === 'CLP';
+    const formatUsd = (n) => `$${Number(n || 0).toLocaleString('en-US', { minimumFractionDigits: 2 })}`;
+    const formatClp = (n) => `$${Math.round(Number(n || 0)).toLocaleString('es-CL', { maximumFractionDigits: 0 })}`;
+    const lineUnitDisplay = (item) => {
+        if (isClpOrder && item.price_clp != null && item.price_clp > 0) {
+            return { amount: formatClp(item.price_clp), currency: 'CLP', value: item.price_clp };
+        }
+        return { amount: formatUsd(item.price_usd), currency: 'USD', value: item.price_usd };
+    };
+    const itemsTotals = order.items.reduce((acc, it) => {
+        const d = lineUnitDisplay(it);
+        if (d.currency === 'CLP') acc.clp += d.value * it.quantity;
+        else acc.usd += d.value * it.quantity;
+        return acc;
+    }, { clp: 0, usd: 0 });
+
     return (
         <div className={styles.orderDetail}>
             <BreadCrumb items={[
@@ -123,13 +139,29 @@ export const OrderDetail = () => {
                         <span className={styles.fieldValue}>{order.phone_code} {order.phone}</span>
                     </div>
                     <div className={styles.field}>
-                        <span className={styles.fieldLabel}>País / Ciudad</span>
-                        <span className={styles.fieldValue}>{order.country}, {order.city}</span>
+                        <span className={styles.fieldLabel}>País</span>
+                        <span className={styles.fieldValue}>{order.country}</span>
+                    </div>
+                    {order.region && (
+                        <div className={styles.field}>
+                            <span className={styles.fieldLabel}>Región</span>
+                            <span className={styles.fieldValue}>{order.region}</span>
+                        </div>
+                    )}
+                    <div className={styles.field}>
+                        <span className={styles.fieldLabel}>Ciudad</span>
+                        <span className={styles.fieldValue}>{order.city}</span>
                     </div>
                     <div className={styles.field}>
                         <span className={styles.fieldLabel}>Dirección</span>
                         <span className={styles.fieldValue}>{order.address}</span>
                     </div>
+                    {order.comuna && (
+                        <div className={styles.field}>
+                            <span className={styles.fieldLabel}>Comuna</span>
+                            <span className={styles.fieldValue}>{order.comuna}</span>
+                        </div>
+                    )}
                     {order.building && (
                         <div className={styles.field}>
                             <span className={styles.fieldLabel}>Edificio / Torre</span>
@@ -183,7 +215,12 @@ export const OrderDetail = () => {
 
             {/* Order Items */}
             <div className={styles.card}>
-                <div className={styles.cardTitle}><FaBox /> Productos ({order.items.length})</div>
+                <div className={styles.cardTitle}>
+                    <FaBox /> Productos ({order.items.length})
+                    <span style={{ marginLeft: '0.75rem', fontSize: '0.8rem', color: 'var(--text-secondary)', fontWeight: 500 }}>
+                        Moneda del pedido: <strong>{order.currency}</strong>
+                    </span>
+                </div>
                 <table className={styles.itemsTable}>
                     <thead>
                         <tr>
@@ -191,33 +228,44 @@ export const OrderDetail = () => {
                             <th>Producto</th>
                             <th>Hashrate</th>
                             <th>Cantidad</th>
-                            <th>Precio USD</th>
+                            <th>Precio unitario</th>
                             <th>Subtotal</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {order.items.map(item => (
-                            <tr key={item.id}>
-                                <td>
-                                    {item.image_url ? (
-                                        <img src={item.image_url} alt={item.product_name} className={styles.itemImg} />
-                                    ) : '—'}
-                                </td>
-                                <td>{item.product_name}</td>
-                                <td>{item.hashrate && item.hashrate_unit ? `${item.hashrate} ${item.hashrate_unit}` : '—'}</td>
-                                <td>{item.quantity}</td>
-                                <td>${item.price_usd.toLocaleString('en-US', { minimumFractionDigits: 2 })}</td>
-                                <td>${(item.price_usd * item.quantity).toLocaleString('en-US', { minimumFractionDigits: 2 })}</td>
-                            </tr>
-                        ))}
+                        {order.items.map(item => {
+                            const d = lineUnitDisplay(item);
+                            const sub = d.value * item.quantity;
+                            const subFmt = d.currency === 'CLP' ? formatClp(sub) : formatUsd(sub);
+                            return (
+                                <tr key={item.id}>
+                                    <td>
+                                        {item.image_url ? (
+                                            <img src={item.image_url} alt={item.product_name} className={styles.itemImg} />
+                                        ) : '—'}
+                                    </td>
+                                    <td>{item.product_name}</td>
+                                    <td>{item.hashrate && item.hashrate_unit ? `${item.hashrate} ${item.hashrate_unit}` : '—'}</td>
+                                    <td>{item.quantity}</td>
+                                    <td>{d.amount} <span style={{ color: 'var(--text-secondary)', fontSize: '0.8rem' }}>{d.currency}</span></td>
+                                    <td>{subFmt} <span style={{ color: 'var(--text-secondary)', fontSize: '0.8rem' }}>{d.currency}</span></td>
+                                </tr>
+                            );
+                        })}
                     </tbody>
                     <tfoot>
-                        <tr>
-                            <td colSpan="5" style={{ textAlign: 'right', fontWeight: 600 }}>Total</td>
-                            <td style={{ fontWeight: 700 }}>
-                                ${order.items.reduce((sum, it) => sum + it.price_usd * it.quantity, 0).toLocaleString('en-US', { minimumFractionDigits: 2 })}
-                            </td>
-                        </tr>
+                        {itemsTotals.clp > 0 && (
+                            <tr>
+                                <td colSpan="5" style={{ textAlign: 'right', fontWeight: 600 }}>Total CLP</td>
+                                <td style={{ fontWeight: 700 }}>{formatClp(itemsTotals.clp)} CLP</td>
+                            </tr>
+                        )}
+                        {itemsTotals.usd > 0 && (
+                            <tr>
+                                <td colSpan="5" style={{ textAlign: 'right', fontWeight: 600 }}>Total USD</td>
+                                <td style={{ fontWeight: 700 }}>{formatUsd(itemsTotals.usd)} USD</td>
+                            </tr>
+                        )}
                     </tfoot>
                 </table>
             </div>

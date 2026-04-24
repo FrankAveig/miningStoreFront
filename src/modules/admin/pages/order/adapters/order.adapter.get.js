@@ -11,6 +11,8 @@ export const orderAdapterGet = (data) => {
     const o = data?.data?.data;
     if (!o) return null;
 
+    const currency = (o.currency || 'USD').toUpperCase() === 'CLP' ? 'CLP' : 'USD';
+
     return {
         id: o.id,
         first_name: o.first_name,
@@ -20,25 +22,35 @@ export const orderAdapterGet = (data) => {
         phone_code: o.phone_code,
         phone: o.phone,
         country: o.country,
+        region: o.region || null,
         city: o.city,
         address: o.address,
+        comuna: o.comuna || null,
         building: o.building,
         notes: o.notes,
         status: o.status,
         status_label: STATUS_MAP[o.status] || o.status,
         admin_notes: o.admin_notes,
         total_items: o.total_items,
+        currency,
         created_at: o.created_at,
         updated_at: o.updated_at,
-        items: (o.items || []).map(item => ({
-            id: item.id,
-            catalog_id: item.catalog_id,
-            product_name: item.product_name,
-            quantity: item.quantity,
-            price_usd: parseFloat(item.price_usd || 0),
-            hashrate: item.hashrate,
-            hashrate_unit: item.hashrate_unit,
-            image_url: item.image_url,
-        })),
+        items: (o.items || []).map(item => {
+            const priceUsd = parseFloat(item.price_usd || 0);
+            const priceClp = item.price_clp != null && item.price_clp !== ''
+                ? parseFloat(item.price_clp)
+                : null;
+            return {
+                id: item.id,
+                catalog_id: item.catalog_id,
+                product_name: item.product_name,
+                quantity: item.quantity,
+                price_usd: priceUsd,
+                price_clp: priceClp,
+                hashrate: item.hashrate,
+                hashrate_unit: item.hashrate_unit,
+                image_url: item.image_url,
+            };
+        }),
     };
 };
