@@ -1,13 +1,6 @@
-export const shippingPricesTableColumns = [
-    { key: "catalog_name", label: "Producto" },
-    { key: "country_label", label: "País" },
-    { key: "price_usd", label: "Precio USD" },
-    { key: "status", label: "Estado" },
-];
-
 /**
- * Países soportados (ISO + nombre en español).
- * 'ALL' = aplica a todos los países (fallback global).
+ * Países soportados para precios de envío (ISO + nombre en español).
+ * 'ALL' = aplica a todos los países (fallback global del producto).
  */
 export const SHIPPING_COUNTRIES = [
     { value: 'ALL', label: 'Todos los países' },

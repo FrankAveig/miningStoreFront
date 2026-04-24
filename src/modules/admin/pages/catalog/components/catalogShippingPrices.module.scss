@@ -1,0 +1,150 @@
+@use "@/styles/_variables.scss" as *;
+
+.container {
+  background-color: $white-color;
+  padding: $spacing-m;
+  border-radius: $border-radius;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+  margin-top: $spacing-l;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: $spacing-m;
+
+  h3 {
+    margin: 0;
+    color: $text-color;
+    font-size: $font-size-l;
+  }
+}
+
+.subtitle {
+  color: $text-color-secondary;
+  font-size: $font-size-s;
+  margin: 0 0 $spacing-m 0;
+}
+
+.tableWrap {
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+
+  th, td {
+    padding: $spacing-s $spacing-s;
+    text-align: left;
+    border-bottom: 1px solid $gray-color;
+    vertical-align: middle;
+  }
+
+  th {
+    font-size: $font-size-s;
+    color: $text-color-secondary;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    background-color: lighten($gray-color, 8%);
+  }
+
+  tr.dirty td {
+    background-color: lighten(#ffe9a8, 5%);
+  }
+}
+
+.input,
+.select {
+  width: 100%;
+  padding: 6px $spacing-s;
+  border: 1px solid $gray-color;
+  border-radius: $border-radius;
+  font-size: $font-size-s;
+  transition: $transition;
+  background-color: $white-color;
+
+  &:focus {
+    outline: none;
+    border-color: $primary-color;
+    box-shadow: 0 0 0 2px rgba($primary-color, 0.2);
+  }
+}
+
+.statusCell {
+  display: flex;
+  align-items: center;
+  gap: $spacing-xs;
+}
+
+.actionsCell {
+  display: flex;
+  gap: $spacing-xs;
+  justify-content: flex-end;
+}
+
+.iconBtn {
+  background: none;
+  border: 1px solid transparent;
+  border-radius: $border-radius;
+  padding: 6px 8px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: $transition;
+  font-size: $font-size-s;
+
+  &:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+}
+
+.saveBtn {
+  color: $primary-color;
+  border-color: $primary-color;
+
+  &:hover:not(:disabled) {
+    background-color: rgba($primary-color, 0.1);
+  }
+}
+
+.removeBtn {
+  color: $error-color;
+
+  &:hover:not(:disabled) {
+    color: darken($error-color, 10%);
+    transform: scale(1.1);
+  }
+}
+
+.empty {
+  text-align: center;
+  color: $text-color-secondary;
+  padding: $spacing-l;
+  font-style: italic;
+}
+
+.warning {
+  background-color: lighten(#ffe9a8, 5%);
+  border-left: 4px solid #f0b400;
+  padding: $spacing-s $spacing-m;
+  border-radius: $border-radius;
+  color: $text-color;
+  font-size: $font-size-s;
+}
+
+.priceCell {
+  width: 140px;
+}
+
+.statusColumn {
+  width: 110px;
+}
+
+.actionsColumn {
+  width: 110px;
+}

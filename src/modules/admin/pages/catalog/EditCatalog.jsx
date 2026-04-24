@@ -4,6 +4,7 @@ import { getCatalogItem } from '@/modules/admin/services/catalog.service';
 import { catalogAdapterGet } from '@/modules/admin/pages/catalog/adapters/catalog.adapter.get';
 import { CatalogForm } from '@/modules/admin/pages/catalog/components/CatalogForm';
 import { CatalogCryptocurrencies } from '@/modules/admin/pages/catalog/components/CatalogCryptocurrencies';
+import { CatalogShippingPrices } from '@/modules/admin/pages/catalog/components/CatalogShippingPrices';
 import { BreadCrumb } from '@/components/data-display/breadCrumb/BreadCrumb';
 import { FaRegListAlt } from 'react-icons/fa';
 import { useToast } from '@/context/ToastContext';
@@ -52,6 +53,7 @@ export const EditCatalog = () => {
         <>
           <CatalogForm initialData={catalogItem} onSuccess={handleSuccess} />
           <CatalogCryptocurrencies catalogId={id} />
+          <CatalogShippingPrices catalogId={id} />
         </>
       ) : null}
     </div>
