@@ -28,6 +28,10 @@ import { ElectricityPrices } from "@/modules/admin/pages/electricityPrice/Electr
 import { NewElectricityPrice } from "@/modules/admin/pages/electricityPrice/NewElectricityPrice";
 import { EditElectricityPrice } from "@/modules/admin/pages/electricityPrice/EditElectricityPrice";
 
+import { ShippingPrices } from "@/modules/admin/pages/shippingPrice/ShippingPrices";
+import { NewShippingPrice } from "@/modules/admin/pages/shippingPrice/NewShippingPrice";
+import { EditShippingPrice } from "@/modules/admin/pages/shippingPrice/EditShippingPrice";
+
 import { Settings } from "@/modules/admin/pages/settings/Settings";
 
 import { Faqs } from "@/modules/admin/pages/faq/Faqs";
@@ -120,6 +124,9 @@ export const AdminRoutes = () => {
         <Route path="/precios-electricidad" element={<ElectricityPrices />} />
         <Route path="/nuevo-precio-electricidad" element={<NewElectricityPrice />} />
         <Route path="/precios-electricidad/:id" element={<EditElectricityPrice />} />
+        <Route path="/precios-envio" element={<ShippingPrices />} />
+        <Route path="/nuevo-precio-envio" element={<NewShippingPrice />} />
+        <Route path="/precios-envio/:id" element={<EditShippingPrice />} />
         <Route path="/preguntas-frecuentes" element={<Faqs />} />
         <Route path="/nueva-pregunta-frecuente" element={<NewFaq />} />
         <Route path="/preguntas-frecuentes/:id" element={<EditFaq />} />
