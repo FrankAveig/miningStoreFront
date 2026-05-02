@@ -61,3 +61,96 @@
   margin-top: $spacing-xs;
 }
 
+.featuresSection {
+  margin-top: $spacing-m;
+  padding-top: $spacing-m;
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.featuresHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: $spacing-s;
+  gap: $spacing-s;
+  flex-wrap: wrap;
+}
+
+.featuresTitle {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 700;
+  color: $text-color-secondary;
+}
+
+.featuresEmpty {
+  font-size: 13px;
+  color: rgba(0, 0, 0, 0.55);
+  background: rgba(0, 0, 0, 0.03);
+  border: 1px dashed rgba(0, 0, 0, 0.12);
+  padding: $spacing-m;
+  border-radius: $border-radius;
+}
+
+.featureCard {
+  background: rgba(0, 0, 0, 0.02);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: $border-radius;
+  padding: $spacing-s;
+  margin-bottom: $spacing-s;
+}
+
+.featureRow {
+  box-sizing: border-box;
+  display: flex;
+  gap: $spacing-m;
+  margin-bottom: $spacing-s;
+  align-items: flex-end;
+
+  &:last-child { margin-bottom: 0; }
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+  }
+}
+
+.featureActions {
+  display: flex;
+  gap: 6px;
+  padding-bottom: 4px;
+}
+
+.iconBtn {
+  width: 34px;
+  height: 34px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  background: #fff;
+  border-radius: 6px;
+  cursor: pointer;
+  color: $text-color-secondary;
+  transition: background 0.15s, border-color 0.15s;
+
+  &:hover:not(:disabled) {
+    background: rgba(0, 0, 0, 0.04);
+    border-color: rgba(0, 0, 0, 0.2);
+  }
+
+  &:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+}
+
+.iconBtnDanger {
+  color: #c0392b;
+  &:hover:not(:disabled) {
+    background: rgba(192, 57, 43, 0.08);
+    border-color: rgba(192, 57, 43, 0.35);
+  }
+}
+
