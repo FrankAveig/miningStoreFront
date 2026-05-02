@@ -95,6 +95,12 @@ export const toggleCatalogItemStatus = async (id) => {
     return response;
 }
 
+/** Borrado físico del producto (irreversible). Admin only. */
+export const deleteCatalogItemPermanent = async (id) => {
+    const response = await api.delete(`/api/v1/catalog/${id}/permanent`);
+    return response;
+}
+
 // Cryptocurrencies relacionadas
 export const getCatalogCryptocurrencies = async (catalogId) => {
     const response = await api.get(`/api/v1/catalog/${catalogId}/cryptocurrencies`);

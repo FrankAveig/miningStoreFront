@@ -1,10 +1,10 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import { PaginatedTable } from '@/components/data-display/paginatedTable/PaginatedTable'
-import { getCatalogItems, toggleCatalogItemStatus } from '@/modules/admin/services/catalog.service'
+import { getCatalogItems, toggleCatalogItemStatus, deleteCatalogItemPermanent } from '@/modules/admin/services/catalog.service'
 import { catalogTableColumns } from './constants/catalogConstants'
 import { catalogAdapterList } from './adapters/catalog.adapter.list'
-import { MdModeEdit } from 'react-icons/md';
+import { MdModeEdit, MdDeleteForever } from 'react-icons/md';
 import { usePaginatedFetch } from '@/hooks/usePaginatedFetch';
 import { useToast } from '@/context/ToastContext';
 import { Button } from '@/components/ui/button/Button';
@@ -15,8 +15,11 @@ import styles from './catalog.module.scss';
 export const Catalog = () => {
     const navigate = useNavigate();
     const [loading2, setLoading2] = React.useState(false);
+    const [loadingPermanentDelete, setLoadingPermanentDelete] = React.useState(false);
     const [showConfirmModal, setShowConfirmModal] = React.useState(false);
+    const [showPermanentDeleteModal, setShowPermanentDeleteModal] = React.useState(false);
     const [selectedItem, setSelectedItem] = React.useState(null);
+    const [itemToDeletePermanent, setItemToDeletePermanent] = React.useState(null);
     const { showToast } = useToast();
 
     const {
@@ -75,6 +78,41 @@ export const Catalog = () => {
         }
     }
 
+    const closePermanentDeleteModal = () => {
+        if (loadingPermanentDelete) return;
+        setShowPermanentDeleteModal(false);
+        setItemToDeletePermanent(null);
+    }
+
+    const handlePermanentDeleteRequest = (item) => {
+        setItemToDeletePermanent(item);
+        setShowPermanentDeleteModal(true);
+    }
+
+    const confirmPermanentDelete = async () => {
+        if (!itemToDeletePermanent) return;
+        setLoadingPermanentDelete(true);
+        try {
+            await deleteCatalogItemPermanent(itemToDeletePermanent.id);
+            forceRefetch();
+            showToast(
+                'El producto fue eliminado permanentemente de la base de datos.',
+                'success',
+                'Eliminado'
+            );
+        } catch (error) {
+            showToast(
+                error.response?.data?.message || 'Error al eliminar el producto',
+                'error',
+                'Error'
+            );
+        } finally {
+            setLoadingPermanentDelete(false);
+            setShowPermanentDeleteModal(false);
+            setItemToDeletePermanent(null);
+        }
+    }
+
     const closeConfirmModal = () => {
         setShowConfirmModal(false);
         setSelectedItem(null);
@@ -88,12 +126,18 @@ export const Catalog = () => {
           className: 'action-button'
         },
         {
+          icon: MdDeleteForever,
+          tooltip: 'Eliminar permanentemente',
+          onClick: handlePermanentDeleteRequest,
+          className: 'action-button'
+        },
+        {
           type: 'switch',
           isChecked: (item) => item.status === 'Activo',
           onChange: (item) => {
             handleToggleStatus(item)
           },
-          disabled: loading2,
+          disabled: loading2 || loadingPermanentDelete,
           color: (item) => item.is_active ? 'success' : 'error'
         }
       ];
@@ -134,6 +178,21 @@ export const Catalog = () => {
         cancelText="Cancelar"
         type="warning"
         loading={loading2}
+      />
+      <ConfirmationModal
+        isOpen={showPermanentDeleteModal}
+        onClose={closePermanentDeleteModal}
+        onConfirm={confirmPermanentDelete}
+        title="Eliminar producto permanentemente"
+        message={
+          itemToDeletePermanent
+            ? `Vas a borrar de forma irreversible «${itemToDeletePermanent.name}» (ID ${itemToDeletePermanent.id}). Se quitarán relaciones, precios de envío asociados e imágenes en el servidor. Los pedidos antiguos se conservan, pero dejarán de enlazar a este producto. ¿Continuar?`
+            : ''
+        }
+        confirmText="Sí, eliminar"
+        cancelText="Cancelar"
+        type="danger"
+        loading={loadingPermanentDelete}
       />
     </div>
   )
