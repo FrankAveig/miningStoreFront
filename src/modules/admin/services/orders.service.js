@@ -1,11 +1,12 @@
 import api from "@/services/interceptors/axiosConfig";
 
-export const getOrders = async (page = 1, limit = 20, term = '', status = '') => {
+export const getOrders = async (page = 1, limit = 20, term = '', status = '', paymentStatus = '') => {
     const params = new URLSearchParams({
         page,
         limit,
         ...(term && { term }),
-        ...(status && { status })
+        ...(status && { status }),
+        ...(paymentStatus && { payment_status: paymentStatus }),
     });
     const response = await api.get(`/api/v1/orders?${params}`);
     return response;

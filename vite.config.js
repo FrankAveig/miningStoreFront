@@ -5,7 +5,11 @@ import { fileURLToPath } from 'url';
 
 // https://vite.dev/config/
 export default defineConfig({
+  base: './',
   plugins: [react()],
+  build: {
+    outDir: 'frontTest',
+  },
   resolve: {
     alias: { '@': fileURLToPath(new URL('./src', import.meta.url)) }
   },

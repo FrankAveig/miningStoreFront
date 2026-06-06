@@ -2,7 +2,7 @@ import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import { PaginatedTable } from '@/components/data-display/paginatedTable/PaginatedTable'
 import { getOrders, deleteOrder } from '@/modules/admin/services/orders.service'
-import { orderTableColumns } from './constants/orderConstants'
+import { orderTableColumns, PAYMENT_STATUS_FILTER_OPTIONS } from './constants/orderConstants'
 import { orderAdapterList } from './adapters/order.adapter.list'
 import { MdVisibility } from 'react-icons/md';
 import { FaTrashAlt, FaWhatsapp } from 'react-icons/fa';
@@ -30,13 +30,13 @@ export const Orders = () => {
         forceRefetch
     } = usePaginatedFetch(
         async (page, limit, filters) => {
-            const response = await getOrders(page, limit, filters.term || '', filters.status || '');
+            const response = await getOrders(page, limit, filters.term || '', filters.status || '', filters.payment_status || '');
             return {
                 data: orderAdapterList(response),
                 pagination: response.data?.pagination
             };
         },
-        { term: '', status: '' }
+        { term: '', status: '', payment_status: '' }
     );
 
     const handleView = (order) => {
@@ -118,7 +118,7 @@ export const Orders = () => {
                         fields={[
                             { name: 'term', label: 'Buscar', type: 'string' },
                             {
-                                name: 'status', label: 'Estado', type: 'select',
+                                name: 'status', label: 'Estado pedido', type: 'select',
                                 options: [
                                     { value: '', label: 'Todos' },
                                     { value: 'pending', label: 'Pendiente' },
@@ -128,6 +128,10 @@ export const Orders = () => {
                                     { value: 'delivered', label: 'Entregado' },
                                     { value: 'cancelled', label: 'Cancelado' },
                                 ]
+                            },
+                            {
+                                name: 'payment_status', label: 'Estado pago', type: 'select',
+                                options: PAYMENT_STATUS_FILTER_OPTIONS,
                             },
                         ]}
                         onFilter={setFilters}

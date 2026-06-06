@@ -3,10 +3,11 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { getOrder, updateOrder } from '@/modules/admin/services/orders.service';
 import { orderAdapterGet } from './adapters/order.adapter.get';
 import { BreadCrumb } from '@/components/data-display/breadCrumb/BreadCrumb';
-import { FaClipboardList, FaUser, FaBox, FaCog } from 'react-icons/fa';
+import { FaClipboardList, FaUser, FaBox, FaCog, FaCreditCard } from 'react-icons/fa';
 import { useToast } from '@/context/ToastContext';
 import { Button } from '@/components/ui/button/Button';
 import { FormSkeleton } from '@/components/form/FormSkeleton';
+import { PaymentDebugPanel } from './components/PaymentDebugPanel';
 import styles from './orderDetail.module.scss';
 
 const STATUS_OPTIONS = [
@@ -103,6 +104,12 @@ export const OrderDetail = () => {
         else acc.usd += d.value * it.quantity;
         return acc;
     }, { clp: 0, usd: 0 });
+
+    const formatMoneyTotal = (amount, cur) => {
+        if (amount == null) return '—';
+        if (cur === 'CLP') return formatClp(amount);
+        return formatUsd(amount);
+    };
 
     return (
         <div className={styles.orderDetail}>
@@ -210,6 +217,56 @@ export const OrderDetail = () => {
                             </Button>
                         </div>
                     </div>
+                </div>
+
+                {/* Payment Info */}
+                <div className={styles.card}>
+                    <div className={styles.cardTitle}><FaCreditCard /> Pago</div>
+                    <div className={styles.field}>
+                        <span className={styles.fieldLabel}>Proveedor</span>
+                        <span className={styles.fieldValue}>{order.payment_provider_label}</span>
+                    </div>
+                    <div className={styles.field}>
+                        <span className={styles.fieldLabel}>Estado del pago</span>
+                        <span className={styles.fieldValue}>{order.payment_status_label}</span>
+                    </div>
+                    {order.total_amount != null && (
+                        <div className={styles.field}>
+                            <span className={styles.fieldLabel}>Total cobrado</span>
+                            <span className={styles.fieldValue}>
+                                {formatMoneyTotal(order.total_amount, order.currency)} {order.currency}
+                            </span>
+                        </div>
+                    )}
+                    {order.shipping_amount > 0 && (
+                        <div className={styles.field}>
+                            <span className={styles.fieldLabel}>Envío (USD)</span>
+                            <span className={styles.fieldValue}>{formatUsd(order.shipping_amount)}</span>
+                        </div>
+                    )}
+                    {order.authorization_code && (
+                        <div className={styles.field}>
+                            <span className={styles.fieldLabel}>Código autorización</span>
+                            <span className={styles.fieldValue}>{order.authorization_code}</span>
+                        </div>
+                    )}
+                    {order.mp_payment_id && (
+                        <div className={styles.field}>
+                            <span className={styles.fieldLabel}>ID pago MP</span>
+                            <span className={styles.fieldValue}>{order.mp_payment_id}</span>
+                        </div>
+                    )}
+                    {order.buy_order && (
+                        <div className={styles.field}>
+                            <span className={styles.fieldLabel}>Buy order (Webpay)</span>
+                            <span className={styles.fieldValue}>{order.buy_order}</span>
+                        </div>
+                    )}
+                    <div className={styles.field}>
+                        <span className={styles.fieldLabel}>Fecha de pago</span>
+                        <span className={styles.fieldValue}>{formatDate(order.paid_at)}</span>
+                    </div>
+                    <PaymentDebugPanel order={order} />
                 </div>
             </div>
 

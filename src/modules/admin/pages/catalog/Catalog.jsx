@@ -1,15 +1,16 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import { PaginatedTable } from '@/components/data-display/paginatedTable/PaginatedTable'
-import { getCatalogItems, toggleCatalogItemStatus, deleteCatalogItemPermanent } from '@/modules/admin/services/catalog.service'
+import { getCatalogItems, toggleCatalogItemStatus, deleteCatalogItemPermanent, updateCatalogItemStock } from '@/modules/admin/services/catalog.service'
 import { catalogTableColumns } from './constants/catalogConstants'
 import { catalogAdapterList } from './adapters/catalog.adapter.list'
-import { MdModeEdit, MdDeleteForever } from 'react-icons/md';
+import { MdModeEdit, MdDeleteForever, MdInventory } from 'react-icons/md';
 import { usePaginatedFetch } from '@/hooks/usePaginatedFetch';
 import { useToast } from '@/context/ToastContext';
 import { Button } from '@/components/ui/button/Button';
 import { ConfirmationModal } from '@/components/data-display/confirmationModal/ConfirmationModal';
 import { FilterBar } from '@/components/data-display/FilterBar/FilterBar';
+import { Modal, useModal } from '@/components/ui/modal/Modal';
 import styles from './catalog.module.scss';
 
 export const Catalog = () => {
@@ -21,6 +22,11 @@ export const Catalog = () => {
     const [selectedItem, setSelectedItem] = React.useState(null);
     const [itemToDeletePermanent, setItemToDeletePermanent] = React.useState(null);
     const { showToast } = useToast();
+
+    const { open: stockModalOpen, openModal: openStockModal, closeModal: closeStockModal } = useModal();
+    const [stockItem, setStockItem] = React.useState(null);
+    const [stockValue, setStockValue] = React.useState(0);
+    const [loadingStock, setLoadingStock] = React.useState(false);
 
     const {
         data,
@@ -118,11 +124,50 @@ export const Catalog = () => {
         setSelectedItem(null);
     }
 
+    const handleOpenStockModal = (item) => {
+        setStockItem(item);
+        setStockValue(item.stock ?? 0);
+        openStockModal();
+    }
+
+    const handleCloseStockModal = () => {
+        if (loadingStock) return;
+        closeStockModal();
+        setStockItem(null);
+        setStockValue(0);
+    }
+
+    const handleSaveStock = async () => {
+        if (!stockItem) return;
+        const parsed = parseInt(stockValue, 10);
+        if (isNaN(parsed) || parsed < 0) {
+            showToast('El stock debe ser un número entero mayor o igual a 0', 'error', 'Error');
+            return;
+        }
+        setLoadingStock(true);
+        try {
+            await updateCatalogItemStock(stockItem.id, parsed);
+            forceRefetch();
+            showToast(`Stock de "${stockItem.name}" actualizado a ${parsed} unidades.`, 'success', '¡Éxito!');
+            handleCloseStockModal();
+        } catch (error) {
+            showToast(error.response?.data?.message || 'Error al actualizar el stock', 'error', 'Error');
+        } finally {
+            setLoadingStock(false);
+        }
+    }
+
     const actions = [
         {
           icon: MdModeEdit,
           tooltip: 'Editar',
           onClick: handleEdit,
+          className: 'action-button'
+        },
+        {
+          icon: MdInventory,
+          tooltip: 'Actualizar stock',
+          onClick: handleOpenStockModal,
           className: 'action-button'
         },
         {
@@ -194,6 +239,51 @@ export const Catalog = () => {
         type="danger"
         loading={loadingPermanentDelete}
       />
+
+      <Modal open={stockModalOpen} onClose={handleCloseStockModal} ariaTitleId="stock-modal-title">
+        <Modal.Header onClose={handleCloseStockModal}>
+          <Modal.Title id="stock-modal-title">Actualizar stock</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          {stockItem && (
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+              <p style={{ margin: 0 }}>
+                <strong>Producto:</strong> {stockItem.name}
+              </p>
+              <p style={{ margin: 0 }}>
+                <strong>Stock actual:</strong> {stockItem.stock ?? 0} unidades
+              </p>
+              <label htmlFor="stock-input" style={{ fontWeight: 600 }}>
+                Nueva cantidad
+              </label>
+              <input
+                id="stock-input"
+                type="number"
+                min="0"
+                value={stockValue}
+                onChange={(e) => setStockValue(e.target.value)}
+                disabled={loadingStock}
+                style={{
+                  padding: '8px 12px',
+                  borderRadius: '6px',
+                  border: '1px solid #ccc',
+                  fontSize: '1rem',
+                  width: '100%',
+                  boxSizing: 'border-box',
+                }}
+              />
+            </div>
+          )}
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" size="md" onClick={handleCloseStockModal} disabled={loadingStock}>
+            Cancelar
+          </Button>
+          <Button variant="primary" size="md" onClick={handleSaveStock} disabled={loadingStock}>
+            {loadingStock ? 'Guardando...' : 'Guardar'}
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </div>
   )
 }

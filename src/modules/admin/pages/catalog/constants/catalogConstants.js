@@ -7,6 +7,7 @@ export const catalogTableColumns = [
     { key: "hashrate", label: "Hashrate" },
     { key: "price_usd", label: "Precio USD" },
     { key: "price_clp", label: "Precio CLP" },
+    { key: "stock", label: "Stock" },
     { key: "status", label: "Estado" },
   ];
 

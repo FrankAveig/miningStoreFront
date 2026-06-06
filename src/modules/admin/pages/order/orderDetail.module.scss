@@ -133,3 +133,161 @@
 .statusShipped   { background: #007bff33; color: #007bff; }
 .statusDelivered { background: #6f42c133; color: #6f42c1; }
 .statusCancelled { background: #dc354533; color: #dc3545; }
+
+.paymentDebug {
+  margin-top: $spacing-m;
+  border: 1px solid var(--border-color, #333);
+  border-radius: 8px;
+  background: var(--bg-primary, #151525);
+}
+
+.paymentDebugSummary {
+  padding: 10px 12px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-secondary, #aaa);
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  user-select: none;
+
+  &::-webkit-details-marker {
+    display: none;
+  }
+
+  &::before {
+    content: "▸";
+    font-size: 0.75rem;
+    transition: transform 0.15s ease;
+  }
+}
+
+.paymentDebug[open] .paymentDebugSummary::before {
+  transform: rotate(90deg);
+}
+
+.paymentDebugBadge {
+  font-size: 0.72rem;
+  font-weight: 500;
+  padding: 2px 8px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--text-secondary, #aaa);
+}
+
+.paymentDebugBody {
+  padding: 0 12px 12px;
+  border-top: 1px solid var(--border-color, #333);
+}
+
+.paymentDebugEmpty {
+  margin: $spacing-s 0 0;
+  font-size: 0.85rem;
+  color: var(--text-secondary, #aaa);
+}
+
+.paymentDebugSection {
+  margin-top: $spacing-m;
+
+  &:first-child {
+    margin-top: $spacing-s;
+  }
+}
+
+.paymentDebugSectionTitle {
+  margin: 0 0 $spacing-s;
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-secondary, #aaa);
+}
+
+.debugField {
+  margin-bottom: 6px;
+  font-size: 0.82rem;
+}
+
+.debugFieldLabel {
+  display: block;
+  color: var(--text-secondary, #888);
+  margin-bottom: 2px;
+}
+
+.debugFieldValue {
+  display: block;
+  word-break: break-all;
+  color: #c8e6c9;
+  font-size: 0.8rem;
+  line-height: 1.4;
+}
+
+.paymentDebugPre {
+  margin: 0;
+  padding: 10px 12px;
+  border-radius: 6px;
+  background: #0d0d14;
+  border: 1px solid var(--border-color, #262636);
+  color: #b8c5d6;
+  font-size: 0.75rem;
+  line-height: 1.45;
+  overflow: auto;
+  max-height: 280px;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.paymentDebugEventList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.paymentDebugEvent {
+  border: 1px solid var(--border-color, #262636);
+  border-radius: 6px;
+  background: #0d0d14;
+}
+
+.paymentDebugEventSummary {
+  padding: 8px 10px;
+  cursor: pointer;
+  font-size: 0.8rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  list-style: none;
+
+  &::-webkit-details-marker {
+    display: none;
+  }
+}
+
+.paymentDebugEventMeta {
+  color: var(--text-secondary, #888);
+  font-size: 0.75rem;
+}
+
+.paymentDebugEventType {
+  font-weight: 600;
+  color: #90caf9;
+}
+
+.paymentDebugEventProvider {
+  font-size: 0.72rem;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--text-secondary, #aaa);
+}
+
+.paymentDebugEvent .paymentDebugPre {
+  margin: 0 10px 10px;
+  max-height: 200px;
+}

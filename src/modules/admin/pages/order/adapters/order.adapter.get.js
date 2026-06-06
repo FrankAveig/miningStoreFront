@@ -7,6 +7,30 @@ const STATUS_MAP = {
     cancelled: 'Cancelado',
 };
 
+const PAYMENT_STATUS_MAP = {
+    pending_payment: 'Pago pendiente',
+    paid:            'Pagado',
+    failed:          'Pago fallido',
+    refunded:        'Reembolsado',
+    cancelled:       'Pago cancelado',
+};
+
+const PAYMENT_PROVIDER_MAP = {
+    webpay:      'Webpay',
+    mercadopago: 'Mercado Pago',
+    manual:      'Manual / WhatsApp',
+};
+
+const parseJsonField = (value) => {
+    if (value == null || value === '') return null;
+    if (typeof value === 'object') return value;
+    try {
+        return JSON.parse(value);
+    } catch {
+        return value;
+    }
+};
+
 export const orderAdapterGet = (data) => {
     const o = data?.data?.data;
     if (!o) return null;
@@ -33,6 +57,29 @@ export const orderAdapterGet = (data) => {
         admin_notes: o.admin_notes,
         total_items: o.total_items,
         currency,
+        payment_provider: o.payment_provider || null,
+        payment_provider_label: PAYMENT_PROVIDER_MAP[o.payment_provider] || o.payment_provider || '—',
+        payment_status: o.payment_status || null,
+        payment_status_label: PAYMENT_STATUS_MAP[o.payment_status] || o.payment_status || '—',
+        subtotal_amount: o.subtotal_amount != null ? parseFloat(o.subtotal_amount) : null,
+        shipping_amount: o.shipping_amount != null ? parseFloat(o.shipping_amount) : null,
+        total_amount: o.total_amount != null ? parseFloat(o.total_amount) : null,
+        authorization_code: o.authorization_code || null,
+        payment_token: o.payment_token || null,
+        payment_type_code: o.payment_type_code || null,
+        mp_preference_id: o.mp_preference_id || null,
+        mp_payment_id: o.mp_payment_id || null,
+        buy_order: o.buy_order || null,
+        checkout_token: o.checkout_token || null,
+        payment_raw_response: parseJsonField(o.payment_raw_response),
+        payment_events: (o.payment_events || []).map((ev) => ({
+            id: ev.id,
+            event_type: ev.event_type,
+            provider: ev.provider,
+            payload: parseJsonField(ev.payload),
+            created_at: ev.created_at,
+        })),
+        paid_at: o.paid_at || null,
         created_at: o.created_at,
         updated_at: o.updated_at,
         items: (o.items || []).map(item => {
