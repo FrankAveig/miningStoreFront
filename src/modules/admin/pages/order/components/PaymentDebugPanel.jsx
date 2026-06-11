@@ -1,3 +1,4 @@
+import { formatApiDateTime } from '@/utils/dateFormat';
 import styles from '../orderDetail.module.scss';
 
 const formatJson = (value) => {
@@ -10,7 +11,7 @@ const formatJson = (value) => {
     }
 };
 
-const formatEventDate = (d) => (d ? new Date(d).toLocaleString('es-CL') : '—');
+const formatEventDate = (d) => formatApiDateTime(d);
 
 const DebugField = ({ label, value }) => {
     if (value == null || value === '') return null;

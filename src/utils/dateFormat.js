@@ -1,3 +1,31 @@
+/** Fechas MySQL de la API (hora Chile, sin zona en el string). */
+export function formatApiDateTime(value, options = {}) {
+  if (!value) return options.empty ?? '—';
+  const raw = String(value).trim();
+  if (/[zZ]$|[+-]\d{2}:?\d{2}$/.test(raw)) {
+    const date = new Date(raw);
+    if (Number.isNaN(date.getTime())) return options.empty ?? '—';
+    return date.toLocaleString('es-CL', {
+      timeZone: 'America/Santiago',
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: false,
+      ...options.localeOptions,
+    });
+  }
+  const m = raw.match(/^(\d{4})-(\d{2})-(\d{2})[ T](\d{2}):(\d{2})(?::(\d{2}))?/);
+  if (!m) return options.empty ?? '—';
+  const [, y, mo, d, h, mi, se] = m;
+  const pad = (n) => String(n).padStart(2, '0');
+  if (options.seconds || se) {
+    return `${pad(d)}/${pad(mo)}/${y} ${pad(h)}:${pad(mi)}:${pad(se || '00')}`;
+  }
+  return `${pad(d)}/${pad(mo)}/${y} ${pad(h)}:${pad(mi)}`;
+}
+
 export function formatDate(dateString) {
   if (!dateString) return '';
   const date = new Date(dateString);

@@ -8,6 +8,7 @@ import { useToast } from '@/context/ToastContext';
 import { Button } from '@/components/ui/button/Button';
 import { FormSkeleton } from '@/components/form/FormSkeleton';
 import { PaymentDebugPanel } from './components/PaymentDebugPanel';
+import { formatApiDateTime } from '@/utils/dateFormat';
 import styles from './orderDetail.module.scss';
 
 const STATUS_OPTIONS = [
@@ -87,7 +88,7 @@ export const OrderDetail = () => {
 
     if (!order) return null;
 
-    const formatDate = (d) => d ? new Date(d).toLocaleString('es-CL') : '—';
+    const formatDate = (d) => formatApiDateTime(d);
 
     const isClpOrder = order.currency === 'CLP';
     const formatUsd = (n) => `$${Number(n || 0).toLocaleString('en-US', { minimumFractionDigits: 2 })}`;

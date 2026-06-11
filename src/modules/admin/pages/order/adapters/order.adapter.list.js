@@ -1,3 +1,5 @@
+import { formatApiDateTime } from '@/utils/dateFormat';
+
 const STATUS_MAP = {
     pending:   'Pendiente',
     contacted: 'Contactado',
@@ -39,9 +41,6 @@ export const orderAdapterList = (data) => {
         payment_status: PAYMENT_STATUS_MAP[order.payment_status] || order.payment_status || '—',
         raw_payment_status: order.payment_status || '',
         payment_provider: order.payment_provider || '',
-        created_at: new Date(order.created_at).toLocaleDateString('es-CL', {
-            year: 'numeric', month: '2-digit', day: '2-digit',
-            hour: '2-digit', minute: '2-digit',
-        }),
+        created_at: formatApiDateTime(order.created_at),
     }));
 };
