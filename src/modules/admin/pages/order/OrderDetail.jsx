@@ -3,7 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { getOrder, updateOrder } from '@/modules/admin/services/orders.service';
 import { orderAdapterGet } from './adapters/order.adapter.get';
 import { BreadCrumb } from '@/components/data-display/breadCrumb/BreadCrumb';
-import { FaClipboardList, FaUser, FaBox, FaCog, FaCreditCard } from 'react-icons/fa';
+import { FaClipboardList, FaUser, FaBox, FaCog, FaCreditCard, FaFileInvoice } from 'react-icons/fa';
 import { useToast } from '@/context/ToastContext';
 import { Button } from '@/components/ui/button/Button';
 import { FormSkeleton } from '@/components/form/FormSkeleton';
@@ -111,6 +111,17 @@ export const OrderDetail = () => {
         return formatUsd(amount);
     };
 
+    const hasBillingData = [
+        order.billing_business_name,
+        order.billing_rut,
+        order.billing_business_activity,
+        order.billing_address,
+        order.billing_comuna,
+        order.billing_city,
+        order.billing_phone,
+        order.billing_email,
+    ].some(Boolean);
+
     return (
         <div className={styles.orderDetail}>
             <BreadCrumb items={[
@@ -182,6 +193,60 @@ export const OrderDetail = () => {
                         </div>
                     )}
                 </div>
+
+                {hasBillingData && (
+                    <div className={styles.card}>
+                        <div className={styles.cardTitle}><FaFileInvoice /> Datos de Factura</div>
+                        {order.billing_business_name && (
+                            <div className={styles.field}>
+                                <span className={styles.fieldLabel}>Razón Social</span>
+                                <span className={styles.fieldValue}>{order.billing_business_name}</span>
+                            </div>
+                        )}
+                        {order.billing_rut && (
+                            <div className={styles.field}>
+                                <span className={styles.fieldLabel}>RUT</span>
+                                <span className={styles.fieldValue}>{order.billing_rut}</span>
+                            </div>
+                        )}
+                        {order.billing_business_activity && (
+                            <div className={styles.field}>
+                                <span className={styles.fieldLabel}>Giro Comercial</span>
+                                <span className={styles.fieldValue}>{order.billing_business_activity}</span>
+                            </div>
+                        )}
+                        {order.billing_address && (
+                            <div className={styles.field}>
+                                <span className={styles.fieldLabel}>Dirección</span>
+                                <span className={styles.fieldValue}>{order.billing_address}</span>
+                            </div>
+                        )}
+                        {order.billing_comuna && (
+                            <div className={styles.field}>
+                                <span className={styles.fieldLabel}>Comuna</span>
+                                <span className={styles.fieldValue}>{order.billing_comuna}</span>
+                            </div>
+                        )}
+                        {order.billing_city && (
+                            <div className={styles.field}>
+                                <span className={styles.fieldLabel}>Ciudad</span>
+                                <span className={styles.fieldValue}>{order.billing_city}</span>
+                            </div>
+                        )}
+                        {order.billing_phone && (
+                            <div className={styles.field}>
+                                <span className={styles.fieldLabel}>Teléfono</span>
+                                <span className={styles.fieldValue}>{order.billing_phone}</span>
+                            </div>
+                        )}
+                        {order.billing_email && (
+                            <div className={styles.field}>
+                                <span className={styles.fieldLabel}>Email</span>
+                                <span className={styles.fieldValue}>{order.billing_email}</span>
+                            </div>
+                        )}
+                    </div>
+                )}
 
                 {/* Status Management */}
                 <div className={styles.card}>
