@@ -8,7 +8,8 @@ export const catalogAdapterList = (data) => {
         price_clp: `$${Number(item.price_clp || 0).toLocaleString('es-CL')}`,
         hashrate: `${item.hashrate} ${item.hashrate_unit}`,
         main_image_url: item.main_image_url,
-        stock: item.stock ?? 0,
+        stock: item.stock === true || item.stock === 1 || item.stock === '1' ? 'Disponible' : 'Sin stock',
+        stock_available: item.stock === true || item.stock === 1 || item.stock === '1',
         status: item.status === 'active' ? 'Activo' : 'Inactivo',
         is_active: item.status === 'active'
     }))

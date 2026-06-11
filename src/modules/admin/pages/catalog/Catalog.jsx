@@ -11,6 +11,7 @@ import { Button } from '@/components/ui/button/Button';
 import { ConfirmationModal } from '@/components/data-display/confirmationModal/ConfirmationModal';
 import { FilterBar } from '@/components/data-display/FilterBar/FilterBar';
 import { Modal, useModal } from '@/components/ui/modal/Modal';
+import { Switch } from '@/components/ui/switch/Switch';
 import styles from './catalog.module.scss';
 
 export const Catalog = () => {
@@ -25,7 +26,7 @@ export const Catalog = () => {
 
     const { open: stockModalOpen, openModal: openStockModal, closeModal: closeStockModal } = useModal();
     const [stockItem, setStockItem] = React.useState(null);
-    const [stockValue, setStockValue] = React.useState(0);
+    const [stockAvailable, setStockAvailable] = React.useState(false);
     const [loadingStock, setLoadingStock] = React.useState(false);
 
     const {
@@ -126,7 +127,7 @@ export const Catalog = () => {
 
     const handleOpenStockModal = (item) => {
         setStockItem(item);
-        setStockValue(item.stock ?? 0);
+        setStockAvailable(Boolean(item.stock_available));
         openStockModal();
     }
 
@@ -134,24 +135,23 @@ export const Catalog = () => {
         if (loadingStock) return;
         closeStockModal();
         setStockItem(null);
-        setStockValue(0);
+        setStockAvailable(false);
     }
 
     const handleSaveStock = async () => {
         if (!stockItem) return;
-        const parsed = parseInt(stockValue, 10);
-        if (isNaN(parsed) || parsed < 0) {
-            showToast('El stock debe ser un número entero mayor o igual a 0', 'error', 'Error');
-            return;
-        }
         setLoadingStock(true);
         try {
-            await updateCatalogItemStock(stockItem.id, parsed);
+            await updateCatalogItemStock(stockItem.id, stockAvailable);
             forceRefetch();
-            showToast(`Stock de "${stockItem.name}" actualizado a ${parsed} unidades.`, 'success', '¡Éxito!');
+            showToast(
+                `Inventario de "${stockItem.name}" actualizado: ${stockAvailable ? 'Disponible' : 'Sin stock'}.`,
+                'success',
+                '¡Éxito!'
+            );
             handleCloseStockModal();
         } catch (error) {
-            showToast(error.response?.data?.message || 'Error al actualizar el stock', 'error', 'Error');
+            showToast(error.response?.data?.message || 'Error al actualizar el inventario', 'error', 'Error');
         } finally {
             setLoadingStock(false);
         }
@@ -166,7 +166,7 @@ export const Catalog = () => {
         },
         {
           icon: MdInventory,
-          tooltip: 'Actualizar stock',
+          tooltip: 'Actualizar inventario',
           onClick: handleOpenStockModal,
           className: 'action-button'
         },
@@ -242,7 +242,7 @@ export const Catalog = () => {
 
       <Modal open={stockModalOpen} onClose={handleCloseStockModal} ariaTitleId="stock-modal-title">
         <Modal.Header onClose={handleCloseStockModal}>
-          <Modal.Title id="stock-modal-title">Actualizar stock</Modal.Title>
+          <Modal.Title id="stock-modal-title">Actualizar inventario</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           {stockItem && (
@@ -251,27 +251,21 @@ export const Catalog = () => {
                 <strong>Producto:</strong> {stockItem.name}
               </p>
               <p style={{ margin: 0 }}>
-                <strong>Stock actual:</strong> {stockItem.stock ?? 0} unidades
+                <strong>Estado actual:</strong> {stockItem.stock}
               </p>
-              <label htmlFor="stock-input" style={{ fontWeight: 600 }}>
-                Nueva cantidad
-              </label>
-              <input
-                id="stock-input"
-                type="number"
-                min="0"
-                value={stockValue}
-                onChange={(e) => setStockValue(e.target.value)}
-                disabled={loadingStock}
-                style={{
-                  padding: '8px 12px',
-                  borderRadius: '6px',
-                  border: '1px solid #ccc',
-                  fontSize: '1rem',
-                  width: '100%',
-                  boxSizing: 'border-box',
-                }}
-              />
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '12px' }}>
+                <span style={{ fontWeight: 600 }}>¿Producto disponible?</span>
+                <Switch
+                  isChecked={stockAvailable}
+                  onChange={() => setStockAvailable((prev) => !prev)}
+                  disabled={loadingStock}
+                  size="medium"
+                  color={stockAvailable ? 'success' : 'error'}
+                />
+              </div>
+              <p style={{ margin: 0, fontSize: '0.9rem', color: 'var(--text-secondary, #666)' }}>
+                {stockAvailable ? 'El producto se podrá agregar al carrito.' : 'El producto aparecerá como sin stock en la tienda.'}
+              </p>
             </div>
           )}
         </Modal.Body>

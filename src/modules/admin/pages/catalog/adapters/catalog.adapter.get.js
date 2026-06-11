@@ -23,7 +23,7 @@ export const catalogAdapterGet = (data) => {
     image_2_url: item.image_2_url,
     image_3_url: item.image_3_url,
     image_4_url: item.image_4_url,
-    stock: item.stock ?? 0,
+    stock: item.stock === true || item.stock === 1 || item.stock === '1',
     status: item.status,
     cryptocurrencies: item.cryptocurrencies || []
   };
