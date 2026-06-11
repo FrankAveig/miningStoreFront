@@ -120,7 +120,7 @@ export const removeCryptocurrencyFromCatalog = async (catalogId, cryptocurrencyI
 }
 
 export const updateCatalogItemStock = async (id, stock) => {
-    const response = await api.patch(`/api/v1/catalog/${id}/stock`, { stock });
+    const response = await api.post(`/api/v1/catalog/${id}/stock`, { stock });
     return response;
 }
 

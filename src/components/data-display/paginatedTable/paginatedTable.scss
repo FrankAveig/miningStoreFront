@@ -70,7 +70,8 @@
     }
 
     &--actions {
-      width: 120px;
+      min-width: 200px;
+      width: 200px;
       text-align: center;
     }
   }
@@ -102,7 +103,8 @@
     }
 
     &--actions {
-      width: 120px;
+      min-width: 200px;
+      width: 200px;
       text-align: center;
       padding: $spacing-s;
     }
@@ -253,9 +255,12 @@
 
   &__actions {
     display: flex;
-    gap: $spacing-s;
+    flex-wrap: wrap;
+    gap: $spacing-xs;
     justify-content: center;
     align-items: center;
+    max-width: 200px;
+    margin: 0 auto;
   }
 
   &__action-button {
