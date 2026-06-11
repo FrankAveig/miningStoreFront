@@ -109,7 +109,7 @@ export const Settings = () => {
       <h2>Configuraciones de la Página</h2>
       <div className="wrapperTableIndex">
         <div className={styles.settingsContainer}>
-          <div className={styles.settingItem}>
+         {/*  <div className={styles.settingItem}>
             <div className={styles.settingInfo}>
               <h3 className={styles.settingTitle}>Mostrar precios en el catálogo</h3>
               <p className={styles.settingDescription}>
@@ -130,7 +130,7 @@ export const Settings = () => {
                 {settings.status === 'active' ? 'Activo' : 'Inactivo'}
               </span>
             </div>
-          </div>
+          </div> */}
 
           <div className={styles.settingItem}>
             <div className={styles.settingInfo}>
