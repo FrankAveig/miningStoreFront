@@ -47,6 +47,10 @@ export const PaginatedTable = ({
   };
 
   const renderCellContent = (item, col) => {
+    if (typeof col.render === "function") {
+      return col.render(item);
+    }
+
     if (col.type === "image" && item[col.key]) {
       return (
         <div className="paginated-table__image-container">
@@ -247,6 +251,7 @@ PaginatedTable.propTypes = {
       key: PropTypes.string.isRequired,
       label: PropTypes.string.isRequired,
       type: PropTypes.string,
+      render: PropTypes.func,
     })
   ).isRequired,
   pagination: PropTypes.shape({

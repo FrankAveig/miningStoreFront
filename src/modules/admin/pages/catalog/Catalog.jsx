@@ -4,13 +4,12 @@ import { PaginatedTable } from '@/components/data-display/paginatedTable/Paginat
 import { getCatalogItems, toggleCatalogItemStatus, deleteCatalogItemPermanent, updateCatalogItemStock } from '@/modules/admin/services/catalog.service'
 import { catalogTableColumns } from './constants/catalogConstants'
 import { catalogAdapterList } from './adapters/catalog.adapter.list'
-import { MdModeEdit, MdDeleteForever, MdInventory } from 'react-icons/md';
+import { MdModeEdit, MdDeleteForever } from 'react-icons/md';
 import { usePaginatedFetch } from '@/hooks/usePaginatedFetch';
 import { useToast } from '@/context/ToastContext';
 import { Button } from '@/components/ui/button/Button';
 import { ConfirmationModal } from '@/components/data-display/confirmationModal/ConfirmationModal';
 import { FilterBar } from '@/components/data-display/FilterBar/FilterBar';
-import { Modal, useModal } from '@/components/ui/modal/Modal';
 import { Switch } from '@/components/ui/switch/Switch';
 import styles from './catalog.module.scss';
 
@@ -24,10 +23,7 @@ export const Catalog = () => {
     const [itemToDeletePermanent, setItemToDeletePermanent] = React.useState(null);
     const { showToast } = useToast();
 
-    const { open: stockModalOpen, openModal: openStockModal, closeModal: closeStockModal } = useModal();
-    const [stockItem, setStockItem] = React.useState(null);
-    const [stockAvailable, setStockAvailable] = React.useState(false);
-    const [loadingStock, setLoadingStock] = React.useState(false);
+    const [loadingStockId, setLoadingStockId] = React.useState(null);
 
     const {
         data,
@@ -125,35 +121,22 @@ export const Catalog = () => {
         setSelectedItem(null);
     }
 
-    const handleOpenStockModal = (item) => {
-        setStockItem(item);
-        setStockAvailable(Boolean(item.stock_available));
-        openStockModal();
-    }
-
-    const handleCloseStockModal = () => {
-        if (loadingStock) return;
-        closeStockModal();
-        setStockItem(null);
-        setStockAvailable(false);
-    }
-
-    const handleSaveStock = async () => {
-        if (!stockItem) return;
-        setLoadingStock(true);
+    const handleToggleStock = async (item) => {
+        if (loadingStockId) return;
+        const nextAvailable = !item.stock_available;
+        setLoadingStockId(item.id);
         try {
-            await updateCatalogItemStock(stockItem.id, stockAvailable);
+            await updateCatalogItemStock(item.id, nextAvailable);
             forceRefetch();
             showToast(
-                `Inventario de "${stockItem.name}" actualizado: ${stockAvailable ? 'Disponible' : 'Sin stock'}.`,
+                `Inventario de "${item.name}" actualizado: ${nextAvailable ? 'Disponible' : 'Sin stock'}.`,
                 'success',
                 '¡Éxito!'
             );
-            handleCloseStockModal();
         } catch (error) {
             showToast(error.response?.data?.message || 'Error al actualizar el inventario', 'error', 'Error');
         } finally {
-            setLoadingStock(false);
+            setLoadingStockId(null);
         }
     }
 
@@ -162,12 +145,6 @@ export const Catalog = () => {
           icon: MdModeEdit,
           tooltip: 'Editar',
           onClick: handleEdit,
-          className: 'action-button'
-        },
-        {
-          icon: MdInventory,
-          tooltip: 'Actualizar inventario',
-          onClick: handleOpenStockModal,
           className: 'action-button'
         },
         {
@@ -182,10 +159,28 @@ export const Catalog = () => {
           onChange: (item) => {
             handleToggleStatus(item)
           },
-          disabled: loading2 || loadingPermanentDelete,
+          disabled: loadingStockId !== null || loading2 || loadingPermanentDelete,
           color: (item) => item.is_active ? 'success' : 'error'
         }
       ];
+
+    const tableColumns = catalogTableColumns.map((col) => {
+        if (col.key !== 'stock') return col;
+        return {
+            ...col,
+            render: (item) => (
+                <div style={{ display: 'flex', justifyContent: 'center' }}>
+                    <Switch
+                        isChecked={item.stock_available}
+                        onChange={() => handleToggleStock(item)}
+                        disabled={loadingStockId !== null || loading2 || loadingPermanentDelete}
+                        size="medium"
+                        color={item.stock_available ? 'success' : 'error'}
+                    />
+                </div>
+            ),
+        };
+    });
 
   return (
     <div>
@@ -205,7 +200,7 @@ export const Catalog = () => {
       </div>
       <PaginatedTable
         dataToPresent={data}
-        columns={catalogTableColumns}
+        columns={tableColumns}
         pagination={pagination}
         onPageChange={fetchPage}
         onLimitChange={setLimit}
@@ -239,45 +234,6 @@ export const Catalog = () => {
         type="danger"
         loading={loadingPermanentDelete}
       />
-
-      <Modal open={stockModalOpen} onClose={handleCloseStockModal} ariaTitleId="stock-modal-title">
-        <Modal.Header onClose={handleCloseStockModal}>
-          <Modal.Title id="stock-modal-title">Actualizar inventario</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          {stockItem && (
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-              <p style={{ margin: 0 }}>
-                <strong>Producto:</strong> {stockItem.name}
-              </p>
-              <p style={{ margin: 0 }}>
-                <strong>Estado actual:</strong> {stockItem.stock}
-              </p>
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '12px' }}>
-                <span style={{ fontWeight: 600 }}>¿Producto disponible?</span>
-                <Switch
-                  isChecked={stockAvailable}
-                  onChange={() => setStockAvailable((prev) => !prev)}
-                  disabled={loadingStock}
-                  size="medium"
-                  color={stockAvailable ? 'success' : 'error'}
-                />
-              </div>
-              <p style={{ margin: 0, fontSize: '0.9rem', color: 'var(--text-secondary, #666)' }}>
-                {stockAvailable ? 'El producto se podrá agregar al carrito.' : 'El producto aparecerá como sin stock en la tienda.'}
-              </p>
-            </div>
-          )}
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" size="md" onClick={handleCloseStockModal} disabled={loadingStock}>
-            Cancelar
-          </Button>
-          <Button variant="primary" size="md" onClick={handleSaveStock} disabled={loadingStock}>
-            {loadingStock ? 'Guardando...' : 'Guardar'}
-          </Button>
-        </Modal.Footer>
-      </Modal>
     </div>
   )
 }
