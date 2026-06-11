@@ -1,13 +1,17 @@
 import { useState, useEffect } from 'react';
-import { getSettings, toggleSetting } from '@/modules/admin/services/settings.service';
+import { getSettings, toggleSetting, updateSettings } from '@/modules/admin/services/settings.service';
 import { useToast } from '@/context/ToastContext';
 import { Switch } from '@/components/ui/switch/Switch';
+import { InputField } from '@/components/form/inputField/InputField';
+import { Button } from '@/components/ui/button/Button';
 import styles from './settings.module.scss';
 
 export const Settings = () => {
   const [settings, setSettings] = useState(null);
+  const [usdToClpRate, setUsdToClpRate] = useState('');
   const [loading, setLoading] = useState(true);
   const [toggling, setToggling] = useState(false);
+  const [savingRate, setSavingRate] = useState(false);
   const { showToast } = useToast();
 
   useEffect(() => {
@@ -21,6 +25,7 @@ export const Settings = () => {
       const data = response.data?.data || [];
       if (data.length > 0) {
         setSettings(data[0]);
+        setUsdToClpRate(String(data[0].usd_to_clp_rate ?? 950));
       }
     } catch (error) {
       showToast('Error al cargar configuraciones', 'error', 'Error');
@@ -35,23 +40,45 @@ export const Settings = () => {
     setToggling(true);
     try {
       await toggleSetting(settings.id);
-      
-      // Actualizar el estado local optimísticamente
+
       setSettings(prev => ({
         ...prev,
         status: prev.status === 'active' ? 'inactive' : 'active'
       }));
-      
+
       showToast('Configuración actualizada', 'success', '¡Éxito!');
-      
-      // Recargar para confirmar
       await loadSettings();
     } catch (error) {
       showToast(error.response?.data?.message || 'Error al actualizar', 'error', 'Error');
-      // Recargar en caso de error para restaurar el estado correcto
       await loadSettings();
     } finally {
       setToggling(false);
+    }
+  };
+
+  const handleSaveRate = async () => {
+    if (!settings || savingRate) return;
+
+    const rate = parseFloat(String(usdToClpRate).replace(',', '.'));
+    if (!Number.isFinite(rate) || rate <= 0) {
+      showToast('Ingresa un tipo de cambio válido mayor a 0', 'error', 'Error');
+      return;
+    }
+
+    setSavingRate(true);
+    try {
+      const response = await updateSettings(settings.id, { usd_to_clp_rate: rate });
+      const updated = response.data?.data;
+      if (updated) {
+        setSettings(updated);
+        setUsdToClpRate(String(updated.usd_to_clp_rate ?? rate));
+      }
+      showToast('Tipo de cambio actualizado', 'success', '¡Éxito!');
+    } catch (error) {
+      showToast(error.response?.data?.message || 'Error al guardar el tipo de cambio', 'error', 'Error');
+      await loadSettings();
+    } finally {
+      setSavingRate(false);
     }
   };
 
@@ -105,10 +132,41 @@ export const Settings = () => {
             </div>
           </div>
 
-          {/* Aquí se pueden agregar más configuraciones en el futuro */}
+          <div className={styles.settingItem}>
+            <div className={styles.settingInfo}>
+              <h3 className={styles.settingTitle}>Tipo de cambio USD → CLP</h3>
+              <p className={styles.settingDescription}>
+                Se usa para convertir pedidos internacionales a pesos chilenos en Webpay,
+                correos de confirmación y pantalla de resultado de pago.
+              </p>
+            </div>
+            <div className={styles.settingRateControl}>
+              <InputField
+                label="1 USD equivale a (CLP)"
+                id="usdToClpRate"
+                name="usd_to_clp_rate"
+                type="number"
+                min="1"
+                step="1"
+                value={usdToClpRate}
+                onChange={(e) => setUsdToClpRate(e.target.value)}
+                disabled={savingRate}
+                size="md"
+                className={styles.rateInput}
+              />
+              <Button
+                type="button"
+                variant="primary"
+                onClick={handleSaveRate}
+                isLoading={savingRate}
+                disabled={savingRate}
+              >
+                Guardar
+              </Button>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   );
 };
-

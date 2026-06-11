@@ -10,3 +10,8 @@ export const toggleSetting = async (id) => {
     return response;
 }
 
+export const updateSettings = async (id, data) => {
+    const response = await api.put(`/api/v1/settings/${id}`, data);
+    return response;
+}
+
