@@ -8,7 +8,7 @@ export default defineConfig({
   base: './',
   plugins: [react()],
   build: {
-    outDir: 'frontTest',
+    outDir: 'dist',
   },
   resolve: {
     alias: { '@': fileURLToPath(new URL('./src', import.meta.url)) }
