@@ -16,6 +16,10 @@ import { Services } from "@/modules/admin/pages/service/Services";
 import { NewService } from "@/modules/admin/pages/service/NewService";
 import { EditService } from "@/modules/admin/pages/service/EditService";
 
+import { HeroSlides } from "@/modules/admin/pages/heroSlide/HeroSlides";
+import { NewHeroSlide } from "@/modules/admin/pages/heroSlide/NewHeroSlide";
+import { EditHeroSlide } from "@/modules/admin/pages/heroSlide/EditHeroSlide";
+
 import { CatalogCategories } from "@/modules/admin/pages/catalogCategory/CatalogCategories";
 import { NewCatalogCategory } from "@/modules/admin/pages/catalogCategory/NewCatalogCategory";
 import { EditCatalogCategory } from "@/modules/admin/pages/catalogCategory/EditCatalogCategory";
@@ -111,6 +115,9 @@ export const AdminRoutes = () => {
         <Route path="/servicios" element={<Services />} />
         <Route path="/nuevo-servicio" element={<NewService />} />
         <Route path="/servicios/:id" element={<EditService />} />
+        <Route path="/banners-hero" element={<HeroSlides />} />
+        <Route path="/nuevo-banner-hero" element={<NewHeroSlide />} />
+        <Route path="/banners-hero/:id" element={<EditHeroSlide />} />
         <Route path="/categorias" element={<CatalogCategories />} />
         <Route path="/nueva-categoria" element={<NewCatalogCategory />} />
         <Route path="/categorias/:id" element={<EditCatalogCategory />} />

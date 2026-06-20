@@ -1,0 +1,64 @@
+@use "@/styles/_variables.scss" as *;
+
+.filterBarContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: $spacing-m;
+}
+
+.helpText {
+  font-size: 13px;
+  color: rgba(0, 0, 0, 0.6);
+  margin: 0 0 $spacing-m;
+  max-width: 760px;
+}
+
+.orderButtons {
+  display: flex;
+  gap: 4px;
+}
+
+.lockedHint {
+  color: rgba(0, 0, 0, 0.35);
+  font-weight: 700;
+}
+
+.iconBtn {
+  width: 34px;
+  height: 34px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  background: #fff;
+  border-radius: 6px;
+  cursor: pointer;
+  color: $text-color-secondary;
+  transition: background 0.15s, border-color 0.15s;
+
+  &:hover:not(:disabled) {
+    background: rgba(0, 0, 0, 0.04);
+    border-color: rgba(0, 0, 0, 0.2);
+  }
+
+  &:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+}
+
+.iconBtnDanger {
+  color: #c0392b;
+  &:hover:not(:disabled) {
+    background: rgba(192, 57, 43, 0.08);
+    border-color: rgba(192, 57, 43, 0.35);
+  }
+}
+
+@media (max-width: 768px) {
+  .filterBarContainer {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
